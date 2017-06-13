@@ -18,6 +18,7 @@ magephp:
             on-deploy:
                 - symfony/cache-warmup: { env: 'dev' }
                 - symfony/assets-install: { env: 'dev' }
+                - symfony/cache-warmup: { env: 'prod' }
             on-release:
             post-release:
             post-deploy:
