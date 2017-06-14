@@ -35,7 +35,7 @@ class Sondage
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Carte", inversedBy="sondages")
-     * @ORM\JoinColumn(name="sondage_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="carte_id", referencedColumnName="id")
      */
     private $carte;
 

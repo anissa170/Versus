@@ -19,7 +19,6 @@ class Proposition
     private $id;
 
     /**
-     * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Localisation", mappedBy="prositions")
      */
     private $localisations;

@@ -20,12 +20,11 @@ class Localisation
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Carte", inversedBy="localisations")
-     * @ORM\JoinColumn(name="localisation_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="carte_id", referencedColumnName="id")
      */
     private $carte;
 
     /**
-     * Many Users have Many Groups.
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proposition", inversedBy="localisations")
      * @ORM\JoinTable(name="propositions_localisations")
      */
