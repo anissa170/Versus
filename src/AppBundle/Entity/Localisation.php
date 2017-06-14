@@ -25,10 +25,9 @@ class Localisation
     private $carte;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proposition", inversedBy="localisations")
-     * @ORM\JoinTable(name="propositions_localisations")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Reponse", mappedBy="localisation")
      */
-    private $propositions;
+    private $reponses;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,8 +45,9 @@ class Localisation
     private $posY;
 
     public function __construct() {
-        $this->propositions = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -156,36 +156,36 @@ class Localisation
     }
 
     /**
-     * Add prosition
+     * Add reponse
      *
-     * @param \AppBundle\Entity\Proposition $prosition
+     * @param \AppBundle\Entity\Reponse $reponse
      *
      * @return Localisation
      */
-    public function addProsition(\AppBundle\Entity\Proposition $prosition)
+    public function addReponse(\AppBundle\Entity\Reponse $reponse)
     {
-        $this->propositions[] = $prosition;
+        $this->reponses[] = $reponse;
 
         return $this;
     }
 
     /**
-     * Remove prosition
+     * Remove reponse
      *
-     * @param \AppBundle\Entity\Proposition $prosition
+     * @param \AppBundle\Entity\Reponse $reponse
      */
-    public function removeProsition(\AppBundle\Entity\Proposition $prosition)
+    public function removeReponse(\AppBundle\Entity\Reponse $reponse)
     {
-        $this->propositions->removeElement($prosition);
+        $this->reponses->removeElement($reponse);
     }
 
     /**
-     * Get prositions
+     * Get reponses
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPrositions()
+    public function getReponses()
     {
-        return $this->propositions;
+        return $this->reponses;
     }
 }

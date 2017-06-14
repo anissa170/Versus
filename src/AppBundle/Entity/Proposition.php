@@ -19,9 +19,9 @@ class Proposition
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Localisation", mappedBy="prositions")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Reponse", mappedBy="proposition")
      */
-    private $localisations;
+    private $reponses;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sondage", inversedBy="reponses")
@@ -40,8 +40,9 @@ class Proposition
     private $couleur;
 
     public function __construct() {
-        $this->localisations = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -102,37 +103,37 @@ class Proposition
     }
 
     /**
-     * Add localisation
+     * Add reponse
      *
-     * @param \AppBundle\Entity\Localisation $localisation
+     * @param \AppBundle\Entity\Reponse $reponse
      *
      * @return Proposition
      */
-    public function addLocalisation(\AppBundle\Entity\Localisation $localisation)
+    public function addReponse(\AppBundle\Entity\Reponse $reponse)
     {
-        $this->localisations[] = $localisation;
+        $this->reponses[] = $reponse;
 
         return $this;
     }
 
     /**
-     * Remove localisation
+     * Remove reponse
      *
-     * @param \AppBundle\Entity\Localisation $localisation
+     * @param \AppBundle\Entity\Reponse $reponse
      */
-    public function removeLocalisation(\AppBundle\Entity\Localisation $localisation)
+    public function removeReponse(\AppBundle\Entity\Reponse $reponse)
     {
-        $this->localisations->removeElement($localisation);
+        $this->reponses->removeElement($reponse);
     }
 
     /**
-     * Get localisations
+     * Get reponses
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getLocalisations()
+    public function getReponses()
     {
-        return $this->localisations;
+        return $this->reponses;
     }
 
     /**
