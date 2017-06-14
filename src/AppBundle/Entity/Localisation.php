@@ -28,7 +28,7 @@ class Localisation
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Proposition", inversedBy="localisations")
      * @ORM\JoinTable(name="propositions_localisations")
      */
-    private $prositions;
+    private $propositions;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,7 +46,7 @@ class Localisation
     private $posY;
 
     public function __construct() {
-        $this->prositions = new ArrayCollection();
+        $this->propositions = new ArrayCollection();
     }
 
     /**
@@ -164,7 +164,7 @@ class Localisation
      */
     public function addProsition(\AppBundle\Entity\Proposition $prosition)
     {
-        $this->prositions[] = $prosition;
+        $this->propositions[] = $prosition;
 
         return $this;
     }
@@ -176,7 +176,7 @@ class Localisation
      */
     public function removeProsition(\AppBundle\Entity\Proposition $prosition)
     {
-        $this->prositions->removeElement($prosition);
+        $this->propositions->removeElement($prosition);
     }
 
     /**
@@ -186,6 +186,6 @@ class Localisation
      */
     public function getPrositions()
     {
-        return $this->prositions;
+        return $this->propositions;
     }
 }
