@@ -46,6 +46,11 @@ class Sondage
     private $carte;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $publier;
@@ -53,7 +58,6 @@ class Sondage
     public function __construct() {
         $this->reponses = new ArrayCollection();
     }
-    
 
     /**
      * Get id
@@ -111,6 +115,30 @@ class Sondage
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Sondage
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 
     /**
