@@ -24,6 +24,11 @@ class Carte
     private $sondages;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $nom;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $image;
@@ -46,6 +51,30 @@ class Carte
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Carte
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
     }
 
     /**
