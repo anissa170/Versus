@@ -19,6 +19,12 @@ class Sondage
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="sondages")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $auteur;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
@@ -47,6 +53,7 @@ class Sondage
     public function __construct() {
         $this->reponses = new ArrayCollection();
     }
+    
 
     /**
      * Get id
@@ -128,6 +135,30 @@ class Sondage
     public function getPublier()
     {
         return $this->publier;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\User $auteur
+     *
+     * @return Sondage
+     */
+    public function setAuteur(\AppBundle\Entity\User $auteur = null)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
     }
 
     /**
