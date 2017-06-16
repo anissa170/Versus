@@ -20,7 +20,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sondage", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Sondage", mappedBy="auteur")
      */
     private $sondages;
 
