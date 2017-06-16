@@ -35,19 +35,14 @@ class Localisation
     private $label;
 
     /**
-     * @ORM\Column(type="float", length=10)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Point", mappedBy="localisation")
      */
-    private $posX;
-
-    /**
-     * @ORM\Column(type="float", length=10)
-     */
-    private $posY;
+    private $points;
 
     public function __construct() {
         $this->reponses = new ArrayCollection();
+        $this->points = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -81,54 +76,6 @@ class Localisation
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * Set posX
-     *
-     * @param float $posX
-     *
-     * @return Localisation
-     */
-    public function setPosX($posX)
-    {
-        $this->posX = $posX;
-
-        return $this;
-    }
-
-    /**
-     * Get posX
-     *
-     * @return float
-     */
-    public function getPosX()
-    {
-        return $this->posX;
-    }
-
-    /**
-     * Set posY
-     *
-     * @param float $posY
-     *
-     * @return Localisation
-     */
-    public function setPosY($posY)
-    {
-        $this->posY = $posY;
-
-        return $this;
-    }
-
-    /**
-     * Get posY
-     *
-     * @return float
-     */
-    public function getPosY()
-    {
-        return $this->posY;
     }
 
     /**
@@ -187,5 +134,39 @@ class Localisation
     public function getReponses()
     {
         return $this->reponses;
+    }
+
+    /**
+     * Add point
+     *
+     * @param \AppBundle\Entity\Point $point
+     *
+     * @return Localisation
+     */
+    public function addPoint(\AppBundle\Entity\Point $point)
+    {
+        $this->points[] = $point;
+
+        return $this;
+    }
+
+    /**
+     * Remove point
+     *
+     * @param \AppBundle\Entity\Point $point
+     */
+    public function removePoint(\AppBundle\Entity\Point $point)
+    {
+        $this->points->removeElement($point);
+    }
+
+    /**
+     * Get points
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPoints()
+    {
+        return $this->points;
     }
 }
