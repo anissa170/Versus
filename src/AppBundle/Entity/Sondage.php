@@ -30,7 +30,7 @@ class Sondage
     private $titre;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="sondage")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="sondage", cascade={"persist", "remove"})
      */
     private $reponses;
 
