@@ -88,7 +88,7 @@ class SondageController extends Controller
      */
     public function deleteSondageAction(Request $request, Sondage $sondage)
     {
-        if ($sondage->getAuteur() != $this->getUser()) {
+        if ($sondage->getAuteur() != $this->getUser() || !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute("homepage");
         }
         $em = $this->getDoctrine()->getManager();

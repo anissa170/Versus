@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block body %}
+<h1>Page Backend</h1>
+
+<ul>
+    <li><a href="{{ path('sondeursBackend') }}">Sondeurs</a></li>
+    <li><a href="{{ path('sondagesBackend') }}">Sondages</a></li>
+</ul>
+{% endblock %}

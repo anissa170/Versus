@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block body %}
+<h1>Page Backend - Sondages</h1>
+
+<ul>
+    <li><a href="{{ path('homeBackend') }}">Retour</a></li>
+</ul>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Titre</th>
+        <th>Image</th>
+        <th>Proposition liés</th>
+        <th>Crée le</th>
+        <th>Supprimer</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for sondage in sondages %}
+        <tr>
+            <td>{{ sondage.id }}</td>
+            <td>{{ sondage.titre }}</td>
+            <td>{{ sondage.image }}</td>
+            <td><a href="{{ path('propositionsFromSondageBackend', {id: sondage.id}) }}">Propositions</a></td>
+            <td>{{ sondage.creationDate|date("d/m/Y") }}</td>
+            <td><button><a href="{{ path('supprimerSondage', {id: sondage.id}) }}">Supprimer</a></button></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

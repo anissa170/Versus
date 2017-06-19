@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block body %}
+<h1>Page Backend - Sondeurs</h1>
+
+<ul>
+    <li><a href="{{ path('homeBackend') }}">Retour</a></li>
+</ul>
+
+<table>
+    <thead>
+        <tr>
+            <th>Pseudo</th>
+            <th>Email</th>
+            <th>Dernière connexion</th>
+            <th>Gerer les droits</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for sondeur in sondeurs %}
+            <tr>
+                <td>{{ sondeur.username }}</td>
+                <td>{{ sondeur.email }}</td>
+                <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
+                <td><button>Modifier les droits</button></td>
+                <td><button>Supprimer</button></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
