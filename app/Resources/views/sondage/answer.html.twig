@@ -11,21 +11,21 @@
 		<div class="map_container">
 			<img id="image_map" src="{{ image_carte }}" alt="Carte"usemap="#map">
 			<map name="map" id="map">
-				{% for nom, zone in carte_zones %}
-					<area shape="poly" coords="{% for point in zone %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ nom }}" />
+				{% for zone in localisations %}
+					<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
 				{% endfor %}
 			</map>
 		</div>
 	</div>
 	<form action="{{ path('reponse', { 'id': id }) }}" method="post">
 		<p class="answer_titile">Choisir votre réponse</p>
-		{% for item in seq %}
-			<input type="radio" name="answer_id" value="" checked > 
+		{% for reponse in reponses %}
+			<input type="radio" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >{{ reponse.label }}
 		{% endfor %}
 		<p class="region_title">La zone choisie est :</p>
 		<p class="region"></p>
 		<a href="#" class="newpopup">Changer de region</a>
-		<input type="hidden" name="zone_id" value="1">
+		<input class="zone_id" type="hidden" name="zone_id" value="1">
 		<input type="submit">
 	</form>
 {% endblock %}

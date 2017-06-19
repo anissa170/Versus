@@ -25,15 +25,13 @@ class SondageController extends Controller
 	    	$sondage = $this->getDoctrine()->getRepository("AppBundle:Sondage")->find($id);
 	    	$carte = $sondage->getCarte();
 	    	$localisations = $carte->getLocalisations();
-	    	$carteObj = array();
-	    	foreach ($localisations as $key => $localisation) {
-	    		$carteObj[$localisation->getLabel()] = $localisation->getPoints();
-	    	}
+	    	$reponses = $sondage->getPropositions();
 	    	$imageCarte = $carte->getImage();
 	        return $this->render('sondage/answer.html.twig', [
 	            'image_carte' => $imageCarte,
-	            'carte_zones' => $carteObj,
-	            'id' => $id
+	            'localisations' => $localisations,
+	            'id' => $id,
+	            'reponses' => $reponses,
 	        ]);
     	}
     }

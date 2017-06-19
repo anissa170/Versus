@@ -47,6 +47,7 @@ $(document).ready(function()
 
 	$('area').click( function() {
 		$('.region').html($(this).attr("title"));
+		$('.zone_id').val($(this).data("id"));
 		$('#fade , .popup_block').fadeOut(function() {
 			$('#fade, a.close').remove();
 		});
