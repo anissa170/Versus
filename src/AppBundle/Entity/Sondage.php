@@ -32,7 +32,7 @@ class Sondage
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Proposition", mappedBy="sondage", cascade={"persist", "remove"})
      */
-    private $reponses;
+    private $propositions;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -56,7 +56,7 @@ class Sondage
     private $publier;
 
     public function __construct() {
-        $this->reponses = new ArrayCollection();
+        $this->propositions = new ArrayCollection();
     }
 
     /**
@@ -196,9 +196,9 @@ class Sondage
      *
      * @return Sondage
      */
-    public function addReponse(\AppBundle\Entity\Proposition $reponse)
+    public function addProposition(\AppBundle\Entity\Proposition $reponse)
     {
-        $this->reponses[] = $reponse;
+        $this->propositions[] = $reponse;
 
         return $this;
     }
@@ -208,9 +208,9 @@ class Sondage
      *
      * @param \AppBundle\Entity\Proposition $reponse
      */
-    public function removeReponse(\AppBundle\Entity\Proposition $reponse)
+    public function removeProposition(\AppBundle\Entity\Proposition $reponse)
     {
-        $this->reponses->removeElement($reponse);
+        $this->propositions->removeElement($reponse);
     }
 
     /**
@@ -218,9 +218,9 @@ class Sondage
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getReponses()
+    public function getPropositions()
     {
-        return $this->reponses;
+        return $this->propositions;
     }
 
     /**
