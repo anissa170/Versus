@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/reponseSondage.css") }}">
+
+{% endblock %}
+
+{% block body %}
+	<div id="popup_map" class="popup_block">
+		<div class="map_container">
+			<img id="image_map" src="{{ image_carte }}" alt="Carte"usemap="#map">
+			<map name="map" id="map">
+				{% for nom, zone in carte_zones %}
+					<area shape="poly" coords="{% for point in zone %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ nom }}" />
+				{% endfor %}
+			</map>
+		</div>
+	</div>
+	<form action="{{ path('reponse', { 'id': id }) }}" method="post">
+		<p class="answer_titile">Choisir votre réponse</p>
+		{% for item in seq %}
+			<input type="radio" name="answer_id" value="" checked > 
+		{% endfor %}
+		<p class="region_title">La zone choisie est :</p>
+		<p class="region"></p>
+		<a href="#" class="newpopup">Changer de region</a>
+		<input type="hidden" name="zone_id" value="1">
+		<input type="submit">
+	</form>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
+	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
+	<script src="{{ asset("assets/js/reponseSondage.js") }}"></script>
+
+{% endblock %}
