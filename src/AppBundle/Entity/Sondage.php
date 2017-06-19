@@ -196,9 +196,9 @@ class Sondage
      *
      * @return Sondage
      */
-    public function addProposition(\AppBundle\Entity\Proposition $reponse)
+    public function addProposition(\AppBundle\Entity\Proposition $proposition)
     {
-        $this->propositions[] = $reponse;
+        $this->propositions[] = $proposition;
 
         return $this;
     }
@@ -208,9 +208,9 @@ class Sondage
      *
      * @param \AppBundle\Entity\Proposition $proposition
      */
-    public function removeProposition(\AppBundle\Entity\Proposition $reponse)
+    public function removeProposition(\AppBundle\Entity\Proposition $proposition)
     {
-        $this->propositions->removeElement($reponse);
+        $this->propositions->removeElement($proposition);
     }
 
     /**
