@@ -43,7 +43,7 @@ class SondageController extends Controller
         $proposition->setCouleur("red");
         $proposition->setSondage($sondage);
 
-        $sondage->addReponse($proposition);
+        $sondage->addProposition($proposition);
 
         $em->persist($sondage);
         $em->flush();

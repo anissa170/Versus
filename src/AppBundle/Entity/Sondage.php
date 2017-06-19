@@ -190,7 +190,7 @@ class Sondage
     }
 
     /**
-     * Add reponse
+     * Add proposition
      *
      * @param \AppBundle\Entity\Proposition $reponse
      *
@@ -204,7 +204,7 @@ class Sondage
     }
 
     /**
-     * Remove reponse
+     * Remove proposition
      *
      * @param \AppBundle\Entity\Proposition $reponse
      */
@@ -214,7 +214,7 @@ class Sondage
     }
 
     /**
-     * Get reponses
+     * Get propositions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
