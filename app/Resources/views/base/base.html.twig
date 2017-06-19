@@ -1,0 +1,21 @@
+{# app/Resources/views/base.html.twig #}
+<html class="no-js home ui-state-init">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">   
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="initial-scale=1">
+        {% block stylesheets %}
+
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            {% block content %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>
