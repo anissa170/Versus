@@ -192,7 +192,7 @@ class Sondage
     /**
      * Add proposition
      *
-     * @param \AppBundle\Entity\Proposition $reponse
+     * @param \AppBundle\Entity\Proposition $proposition
      *
      * @return Sondage
      */
@@ -206,7 +206,7 @@ class Sondage
     /**
      * Remove proposition
      *
-     * @param \AppBundle\Entity\Proposition $reponse
+     * @param \AppBundle\Entity\Proposition $proposition
      */
     public function removeProposition(\AppBundle\Entity\Proposition $reponse)
     {
