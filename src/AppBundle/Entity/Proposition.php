@@ -24,7 +24,7 @@ class Proposition
     private $reponses;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sondage", inversedBy="reponses")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sondage", inversedBy="propositions")
      * @ORM\JoinColumn(name="sondage_id", referencedColumnName="id")
      */
     private $sondage;
