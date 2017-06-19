@@ -11,6 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 class SondageController extends Controller
 {
     /**
+     * @Route("/sondages", name="afficherSondages")
+     */
+    public function sondagesAction(Request $request)
+    {
+        $sondages = $this
+            ->getDoctrine()
+            ->getRepository("AppBundle:Sondage")
+            ->findAll();
+
+        return $this->render('default/sondage.html.twig', [
+            'sondages' => $sondages
+        ]);
+    }
+
+    /**
      * @Route("/sondage/{id}", name="afficherSondage")
      */
     public function sondageAction(Request $request, Sondage $sondage)
