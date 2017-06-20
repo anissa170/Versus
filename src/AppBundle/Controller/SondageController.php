@@ -37,13 +37,13 @@ class SondageController extends Controller
     		if (empty($request->request->get('answer_id'))) {
     			$session->getFlashBag()->add(
 				    'error',
-				    "Un probleme est survenue lors de l'envoie de votre reponse."
+				    "Un problème est survenue lors de l'envoi de votre réponse."
 				);
     		}
     		if (empty($request->request->get('zone_id'))) {
     			$session->getFlashBag()->add(
 				    'error',
-				    "Un probleme est survenue lors de l'envoie de votre zone."
+				    "Un problème est survenue lors de l'envoi de votre zone."
 				);
     		}
     	}
@@ -64,12 +64,12 @@ class SondageController extends Controller
 	    	$carte = $sondage->getCarte();
 	    	$localisations = $carte->getLocalisations();
 	    	$reponses = $sondage->getPropositions();
-	    	$imageCarte = $carte->getImage();
 	        return $this->render('sondage/answer.html.twig', [
-	            'image_carte' => $imageCarte,
+                'sondage' => $sondage,
+	            'carte' => $carte,
 	            'localisations' => $localisations,
 	            'id' => $id,
-	            'reponses' => $reponses
+	            'reponses' => $reponses,
 	        ]);
     	}
     }
@@ -79,6 +79,7 @@ class SondageController extends Controller
      */
     public function sondageAction(Request $request, Sondage $sondage)
     {
+
         return $this->render('default/sondage.html.twig', [
             'sondage' => $sondage
         ]);
