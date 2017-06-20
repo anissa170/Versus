@@ -48,12 +48,11 @@
 {% endblock %}
 
 {% block javascripts %}
+{{ parent() }}
 <script>
     function showPopup(id) {
         document.getElementById("popupDroits").style.display = "block";
         document.getElementById("idUser").value = id;
-//        console.log(id);
-//        console.log(document.getElementsByName("idUser").value);
     }
 </script>
 {% endblock %}
