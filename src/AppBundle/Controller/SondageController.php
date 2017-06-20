@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Proposition;
 use AppBundle\Entity\Sondage;
+use AppBundle\Entity\Reponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,54 @@ class SondageController extends Controller
     }
 
     /**
+     * @Route("/sondage/{id}/answer", name="reponse")
+     */
+    public function answerAction(Request $request, $id)
+    {	
+    	$session = $request->getSession();
+
+    	if ($request->getMethod() == 'POST') {
+    		if (empty($request->request->get('answer_id'))) {
+    			$session->getFlashBag()->add(
+				    'error',
+				    "Un probleme est survenue lors de l'envoie de votre reponse."
+				);
+    		}
+    		if (empty($request->request->get('zone_id'))) {
+    			$session->getFlashBag()->add(
+				    'error',
+				    "Un probleme est survenue lors de l'envoie de votre zone."
+				);
+    		}
+    	}
+
+    	if ($request->getMethod() == 'POST' && !$session->getFlashBag()->has('error')) {
+    		$em = $this->getDoctrine()->getManager();
+    		$reponse = new Reponse();
+    		$reponse->setDatetime(new \DateTime());
+    		$reponse->setProposition($this->getDoctrine()->getRepository("AppBundle:Proposition")->find($request->request->get('answer_id')));
+    		$reponse->setLocalisation($this->getDoctrine()->getRepository("AppBundle:Localisation")->find($request->request->get('zone_id')));
+    		$em->persist($reponse);
+    		$em->flush();
+    		return $this->render('sondage/answer-validate.html.twig', [
+	        ]);
+    	}
+    	else {
+	    	$sondage = $this->getDoctrine()->getRepository("AppBundle:Sondage")->find($id);
+	    	$carte = $sondage->getCarte();
+	    	$localisations = $carte->getLocalisations();
+	    	$reponses = $sondage->getPropositions();
+	    	$imageCarte = $carte->getImage();
+	        return $this->render('sondage/answer.html.twig', [
+	            'image_carte' => $imageCarte,
+	            'localisations' => $localisations,
+	            'id' => $id,
+	            'reponses' => $reponses
+	        ]);
+    	}
+    }
+
+	/**
      * @Route("/sondage/{id}", name="afficherSondage")
      */
     public function sondageAction(Request $request, Sondage $sondage)
