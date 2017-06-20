@@ -26,10 +26,34 @@
                 <td>{{ sondeur.username }}</td>
                 <td>{{ sondeur.email }}</td>
                 <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
-                <td><button>Modifier les droits</button></td>
+                <td><button onclick="showPopup({{ sondeur.id }})">Modifier les droits</button></td>
                 <td><button>Supprimer</button></td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<aside id="popupDroits" style="display: none">
+    <h2>Définir les droits pour <span id="pseudo"></span></h2>
+    <form method="post">
+        <label for="droit">Définir en tant que :</label>
+        <input name="idUser" id="idUser" type="hidden">
+        <select name="droit" id="droit">
+            <option value="sondeur">Sondeur</option>
+            <option value="admin">Administrateur</option>
+        </select>
+        <button type="submit">Valider</button>
+    </form>
+</aside>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function showPopup(id) {
+        document.getElementById("popupDroits").style.display = "block";
+        document.getElementById("idUser").value = id;
+//        console.log(id);
+//        console.log(document.getElementsByName("idUser").value);
+    }
+</script>
 {% endblock %}

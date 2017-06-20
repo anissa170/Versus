@@ -6,6 +6,7 @@ use AppBundle\Entity\Sondage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/backend")
@@ -18,17 +19,33 @@ class BackendController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('backend/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR
-        ]);
+        return $this->render('backend/index.html.twig');
     }
 
     /**
      * @Route("/sondeurs", name="sondeursBackend")
      */
-    public function sondeursAction()
+    public function sondeursAction(Request $request)
     {
-        $sondeurs = $this->getDoctrine()->getRepository("AppBundle:User")->findAll();
+        if ($request->request->count()) {
+            $user = $this
+                ->getDoctrine()
+                ->getRepository("AppBundle:User")
+                ->find($request->request->get("idUser"));
+
+            if ($this->getUser() != $user) {
+                if ($request->request->get("droit") == "admin") {
+                    $user->addRole("ROLE_ADMIN");
+                } else {
+                    $user->removeRole("ROLE_ADMIN");
+                }
+            }
+        }
+
+        $sondeurs = $this
+            ->getDoctrine()
+            ->getRepository("AppBundle:User")
+            ->findAll();
 
         return $this->render('backend/sondeurs.html.twig', [
             'sondeurs' => $sondeurs
@@ -40,7 +57,10 @@ class BackendController extends Controller
      */
     public function sondagesAction()
     {
-        $sondages = $this->getDoctrine()->getRepository("AppBundle:Sondage")->findAll();
+        $sondages = $this
+            ->getDoctrine()
+            ->getRepository("AppBundle:Sondage")
+            ->findAll();
 
         return $this->render('backend/sondages.html.twig', [
             'sondages' => $sondages
