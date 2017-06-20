@@ -27,7 +27,7 @@ class BackendController extends Controller
      */
     public function sondeursAction(Request $request)
     {
-        if ($request->request->count()) {
+        if ($request->getMethod() == 'POST') {
             $user = $this
                 ->getDoctrine()
                 ->getRepository("AppBundle:User")
