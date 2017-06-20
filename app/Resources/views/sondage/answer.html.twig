@@ -8,6 +8,9 @@
 
 {% block body %}
 	<div id="popup_map" class="popup_block">
+		{% for error in app.session.flashbag.get('error') %}
+			<p class="error">{{ error }}</p>
+		{% endfor %}
 		<div class="map_container">
 			<img id="image_map" src="{{ image_carte }}" alt="Carte"usemap="#map">
 			<map name="map" id="map">
@@ -25,7 +28,7 @@
 		<p class="region_title">La zone choisie est :</p>
 		<p class="region"></p>
 		<a href="#" class="newpopup">Changer de region</a>
-		<input class="zone_id" type="hidden" name="zone_id" value="1">
+		<input class="zone_id" type="hidden" name="zone_id">
 		<input type="submit">
 	</form>
 {% endblock %}

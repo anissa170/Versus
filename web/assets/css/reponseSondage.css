@@ -2,6 +2,18 @@
  	background-repeat: no-repeat;
  }
 
+ #image_map {
+ 	height: 500px;
+ 	width: 500px;
+ }
+
+ @media screen and (max-width: 640px) {
+    #image_map {
+	 	height: 200px;
+	 	width: 200px;
+	 }
+ }
+
  #fade { /*--Masque opaque noir de fond--*/
 	display: none; /*--masqué par défaut--*/
 	background: #000;
@@ -11,7 +23,6 @@
 	z-index: 9999;
 }
 .popup_block{
-	display: none; /*--masqué par défaut--*/
 	background: #fff;
 	padding: 20px;
 	border: 20px solid #ddd;
