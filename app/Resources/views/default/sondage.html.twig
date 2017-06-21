@@ -1,5 +1,11 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/statsSondage.css") }}">
+
+{% endblock %}
+
 {% block body %}
 <p>{{ sondage.titre }}</p>
 {% if sondage.image is not empty %}
@@ -11,17 +17,101 @@
 {% for reponse in sondage.propositions %}
 	<input type="radio" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >{{ reponse.label }}
 {% endfor %}
-<ul id="tabs-swipe-demo" class="tabs">
-	<li class="tab col s3"><a href="#test-swipe-1">Test 1</a></li>
-	<li class="tab col s3"><a class="active" href="#test-swipe-2">Test 2</a></li>
-	<li class="tab col s3"><a href="#test-swipe-3">Test 3</a></li>
+<ul id="tabs-swipe" class="tabs">
+	<li class="tab col s3"><a class="active" href="#swipe-region">Par region</a></li>
+	<li class="tab col s3"><a href="#swipe-jours">Par jours</a></li>
 </ul>
-<div id="test-swipe-1" class="col s12 blue">Test 1</div>
-<div id="test-swipe-2" class="col s12 red">Test 2</div>
-<div id="test-swipe-3" class="col s12 green">Test 3</div>
-<script type="text/javascript"> 
-	$(document).ready(function(){
-		$('ul.tabs').tabs();
-	});
-</script>
+<div id="swipe-region" class="col s12">
+	<div class="map_container">
+		<img id="image_map" src="{{ carte.image }}" alt="Carte"usemap="#map">
+		<map name="map" id="map">
+			{% for zone in localisations %}
+				<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
+			{% endfor %}
+		</map>
+	</div>
+	<canvas id="chartRegion"></canvas>
+</div>
+<div id="swipe-jours" class="col s12">
+	<canvas id="chartJours"></canvas>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" /></script>
+	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
+	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
+	<script src="{{ asset("assets/js/statsSondage.js") }}"></script>
+	<script type="text/javascript"> 
+		$(document).ready(function(){
+			$('ul.tabs').tabs();
+			
+			var ctx = document.getElementById("chartRegion");
+			data1 = {
+			    labels: [
+			        {% for proposition in sondage.propositions %}
+			        	'{{ proposition.label }}',
+					{% endfor %}
+			    ],
+			    datasets: [{
+			    	label: "Par region",
+			        data: [
+				        {% for proposition in carte_chart %}
+				        	'{{ proposition.reponses|length }}',
+						{% endfor %}
+			        ],
+				    backgroundColor: [
+				    	{% for proposition in carte_chart %}
+				        	'{{ proposition.proposition.couleur }}',
+						{% endfor %}
+				    ],
+			    }],
+			};
+			var myDoughnutChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: data1,
+			    options: {}
+			});
+
+			var ctx2 = document.getElementById("chartJours");
+			data2 = {
+			    labels: [
+
+					{% for date,reponse in lines_chart|first.dates %}
+			        	'{{ date|date("d/m/Y") }}',
+					{% endfor %}
+			    ],
+			    datasets: [
+			    	{% for line in lines_chart %}
+			    	{
+						label: "{{ line.proposition.label }}",
+						borderColor: "{{ line.proposition.couleur }}",
+						pointRadius: 5,
+						pointHoverRadius : 10,
+						fill: false,
+						data: [{% for date,reponse in line.dates %}'{{ reponse|length }}',{% endfor %}]
+					}, 
+					{% endfor %}
+				]
+			};
+			var myLineChart = new Chart(ctx2, {
+			    type: 'line',
+			    data: data2,
+			    options: {
+			        scales: {
+			            yAxes: [{
+			            	display: true,
+				            ticks: {
+				                stepSize: 1
+				            }
+			            }]
+			        },
+			    }
+			});
+		});
+
+	</script>
+
 {% endblock %}

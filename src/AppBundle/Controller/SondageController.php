@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Carbon\Carbon;
+
 class SondageController extends Controller
 {
     /**
@@ -79,9 +81,86 @@ class SondageController extends Controller
      */
     public function sondageAction(Request $request, Sondage $sondage)
     {
+        $propositions = $sondage->getPropositions();
+        $lineResult = array();
+        $reponseRegion = array();
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($propositions as $proposition) {
+
+            //line graf
+            $queryLine = $em->createQuery(
+                'SELECT r
+                FROM AppBundle:Reponse r
+                WHERE r.proposition = :id
+                AND r.datetime >= :dateBegin
+                AND r.datetime <= :dateEnd'
+            );
+            $beginDate = Carbon::instance($sondage->getCreationDate())->setTime(0,0,0);
+            $idPorposition = $proposition->getId();
+
+            $propositionCountPerDay = array();
+            $tempReponseRegion = array();
+            $propositionCountPerDay['proposition'] = $proposition;
+            $tempReponseRegion['proposition'] = $proposition;
+
+            $dates = array();
+
+            for ($i=0; $i < 10; $i++) {
+                $beginDateString = $beginDate->toDateTimeString();
+                $dates[$beginDateString] =  array();
+
+                $endDateString = Carbon::instance($beginDate)->setTime(23,59,59)->toDateTimeString();
+                $beginDate->addDay(1);
+                
+                $queryLine->setParameter('id', $idPorposition);
+                $queryLine->setParameter('dateBegin', $beginDateString);
+                $queryLine->setParameter('dateEnd', $endDateString);
+                $dates[$beginDateString] = $queryLine->getResult();
+            }
+
+            $propositionCountPerDay['dates'] = $dates;
+
+            //1st region selected
+            $queryLocation = $em->createQuery(
+                'SELECT r
+                FROM AppBundle:Reponse r
+                WHERE r.proposition = :id_propo
+                AND r.localisation = :id_loca'
+            );
+
+            $queryLocation->setParameter('id_propo', $proposition->getId());
+            $queryLocation->setParameter('id_loca', $sondage->getCarte()->getLocalisations()[0]->getId());
+
+            $tempReponseRegion['reponses'] = $queryLocation->getResult();
+
+            array_push($reponseRegion, $tempReponseRegion);
+
+            array_push($lineResult, $propositionCountPerDay);
+
+        }
+
+        $carte = $sondage->getCarte();
+        $localisations = $carte->getLocalisations();
 
         return $this->render('default/sondage.html.twig', [
-            'sondage' => $sondage
+            'sondage' => $sondage,
+            'lines_chart' => $lineResult,
+            'carte_chart' => $reponseRegion,
+            'carte' => $carte,
+            'localisations' => $localisations,
+            'reponses' => $propositions,
+        ]);
+    }
+
+    /**
+     * @Route("/sondage/{id}/ajax", name="ajaxSondage")
+     */
+    public function ajaxAction(Request $request, Sondage $sondage)
+    {
+        $id = $request->request->get('zone_id');
+        return $this->render('sondage/ajax.html.twig', [
+            'id' => $id,
         ]);
     }
 
