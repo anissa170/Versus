@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Proposition;
 use AppBundle\Entity\Sondage;
 use AppBundle\Entity\Reponse;
+use AppBundle\Form\SondageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,30 +90,62 @@ class SondageController extends Controller
      */
     public function addSondageAction(Request $request)
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute("homepage");
+//        if (!$this->getUser()) {
+//            return $this->redirectToRoute("homepage");
+//        }
+
+//        if ($request->getMethod() == 'POST') {
+//
+//            $em = $this->getDoctrine()->getManager();
+//
+//            $sondage = new Sondage();
+//            $sondage->setAuteur($this->getUser());
+//            $sondage->setCreationDate(new \DateTime());
+//            $sondage->setPublier(false);
+//
+//            //Traitement image
+//            dump($_FILES);
+//            $sondage->setImage("nope");
+//
+//            //Traitement carte
+////        $sondage->setCarte(1);
+//
+//            $proposition = new Proposition();
+//            $proposition->setLabel("Test 1");
+//            $proposition->setCouleur("red");
+//            $proposition->setSondage($sondage);
+//
+//            $sondage->addProposition($proposition);
+//
+//            $em->persist($sondage);
+//            $em->flush();
+//
+//            return $this->redirectToRoute("homepage");
+//        }
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('fos_user_security_login');
         }
-        $em = $this->getDoctrine()->getManager();
 
         $sondage = new Sondage();
-        $sondage->setTitre("Testyui");
         $sondage->setAuteur($this->getUser());
-        $sondage->setImage("nope");
-//        $sondage->setCarte(1);
         $sondage->setCreationDate(new \DateTime());
-        $sondage->setPublier(true);
+        $sondage->setPublier(false);
 
-        $proposition = new Proposition();
-        $proposition->setLabel("Test 1");
-        $proposition->setCouleur("red");
-        $proposition->setSondage($sondage);
+        $form = $this->get('form.factory')->create(SondageType::class, $sondage);
 
-        $sondage->addProposition($proposition);
+        $form->handleRequest($request);
 
-        $em->persist($sondage);
-        $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($data);
+            $em->flush();
+        }
 
-        return $this->redirectToRoute("homepage");
+        return $this->render("sondage/new-sondage.html.twig", [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
