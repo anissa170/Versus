@@ -12,7 +12,7 @@
 			<p class="error">{{ error }}</p>
 		{% endfor %}
 		<div class="map_container">
-			<img id="image_map" src="{{ image_carte }}" alt="Carte"usemap="#map">
+			<img id="image_map" src="{{ carte.image }}" alt="Carte"usemap="#map">
 			<map name="map" id="map">
 				{% for zone in localisations %}
 					<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
@@ -20,6 +20,11 @@
 			</map>
 		</div>
 	</div>
+	{% if sondage.image is not empty %}
+		<img src="{{ sondage.image }}">
+	{% endif %}
+	<p>Crée par : {{ sondage.auteur.userName }}</p>
+	<p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
 	<form action="{{ path('reponse', { 'id': id }) }}" method="post">
 		<p class="answer_titile">Choisir votre réponse</p>
 		{% for reponse in reponses %}
