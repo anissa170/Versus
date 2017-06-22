@@ -1,6 +1,10 @@
 var data = { alwaysOn:true, strokeColor:'000000', strokeWidth:'1', fillOpacity:'0' };
 var data_hover = { alwaysOn:true, strokeColor:'000000', strokeWidth:'1', fillOpacity:'0.1' };
 
+function removeHover($element) {
+	$element.data('maphilight', data).trigger('alwaysOn.maphilight');
+}
+
 $(document).ready(function()
 {
     $('area').data('maphilight', data).trigger('alwaysOn.maphilight');
@@ -8,8 +12,12 @@ $(document).ready(function()
 	$('area').mouseover(function(e) {
 	    $(this).data('maphilight', data_hover).trigger('alwaysOn.maphilight');  
 	}).mouseout(function(e) {
-	    $(this).data('maphilight', data).trigger('alwaysOn.maphilight'); 
+		if (!$(this).hasClass('selected')) {
+	    	removeHover($(this));
+		}
 	}).click(function(e) { e.preventDefault(); });
+
+	$('area.selected').data('maphilight', data_hover).trigger('alwaysOn.maphilight');  
 
 
     //init plugins resize map
@@ -18,6 +26,11 @@ $(document).ready(function()
 	//appliquation des zones sur la carte
     $('#image_map').maphilight();
 	$('area').click( function() {
+		removeHover($('area.selected'));
+		$('area.selected').removeClass('selected');
+
+		$(this).addClass('selected');
+		$('.regionLabel span').text($(this).attr("title"));
 		var	data = $(this).data("id");
 		$.ajax({
 	       type : 'POST',

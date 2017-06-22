@@ -26,10 +26,11 @@
 		<img id="image_map" src="{{ carte.image }}" alt="Carte"usemap="#map">
 		<map name="map" id="map">
 			{% for zone in localisations %}
-				<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
+				<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" {% if loop.first %}class="selected"{% endif %}/>
 			{% endfor %}
 		</map>
 	</div>
+	<p class="regionLabel">Region choisie : <span>{{ first_localisation_name }}</span></p>
 	<canvas id="chartRegion"></canvas>
 </div>
 <div id="swipe-jours" class="col s12">

@@ -152,6 +152,7 @@ class SondageController extends Controller
             'carte' => $carte,
             'localisations' => $localisations,
             'reponses' => $propositions,
+            'first_localisation_name' => $sondage->getCarte()->getLocalisations()[0]->getLabel(),
         ]);
     }
 
@@ -161,6 +162,7 @@ class SondageController extends Controller
     public function ajaxAction(Request $request, Sondage $sondage)
     {
         $id = $request->request->get('zone_id');
+
         $propositions = $sondage->getPropositions();
         $em = $this->getDoctrine()->getManager();
         $arrayReturn = array();
@@ -177,7 +179,6 @@ class SondageController extends Controller
             $queryLocation->setParameter('id_propo', $proposition->getId());
 
             $queryLocation->setParameter('id_loca', $id);
-
             $array['proposition'] = array('label' => $proposition->getLabel(), 'couleur' => $proposition->getCouleur());
             $array['reponses'] = count($queryLocation->getResult());
             array_push($arrayReturn, $array);
