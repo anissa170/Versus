@@ -1,10 +1,114 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-    <section class="container">
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-        <input type="submit">
-        {{ form_end(form) }}
-    </section>
+    <article class="row">
+        <form method="post" class="col s12" enctype="multipart/form-data">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select name="carte" required>
+                            <option value="" disabled selected>Choose your option</option>
+                            {% for carte in cartes %}
+                                <option value="{{ carte.id }}">{{ carte.nom }}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Materialize Select</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Image</span>
+                            <input type="file" name="image">
+                        </div>
+
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="titre" type="text" name="titre" class="validate" required>
+                        <label for="titre">Question</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input id="proposition_1" name="proposition_1" type="text" required>
+                        <label for="proposition_1">Proposition 1</label>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <input type="color" id="proposition_1_color" name="proposition_1_color" class="icons">
+                        <label for="proposition_1_color">Couleur</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input id="proposition_2" name="proposition_2" type="text" required>
+                        <label for="proposition_2">Proposition 2</label>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <input type="color" id="proposition_2_color" name="proposition_2_color" class="icons">
+                        <label for="proposition_2_color">Couleur</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input id="proposition_3" name="proposition_3" type="text">
+                        <label for="proposition_3">Proposition 3</label>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <input type="color" id="proposition_3_color" name="proposition_3_color" class="icons">
+                        <label for="proposition_3_color">Couleur</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input id="proposition_4" name="proposition_4" type="text">
+                        <label for="proposition_4">Proposition 4</label>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <input type="color" id="proposition_4_color" name="proposition_4_color" class="icons">
+                        <label for="proposition_4_color">Couleur</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input id="proposition_5" name="proposition_5" type="text">
+                        <label for="proposition_5">Proposition 5</label>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <input type="color" id="proposition_5_color" name="proposition_5_color" class="icons">
+                        <label for="proposition_5_color">Couleur</label>
+                    </div>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </article>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 {% endblock %}
