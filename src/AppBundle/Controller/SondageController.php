@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Carbon\Carbon;
 
 class SondageController extends Controller
@@ -159,9 +161,29 @@ class SondageController extends Controller
     public function ajaxAction(Request $request, Sondage $sondage)
     {
         $id = $request->request->get('zone_id');
-        return $this->render('sondage/ajax.html.twig', [
-            'id' => $id,
-        ]);
+        $propositions = $sondage->getPropositions();
+        $em = $this->getDoctrine()->getManager();
+        $arrayReturn = array();
+        foreach ($propositions as $proposition) {
+
+            $array = array();
+            $queryLocation = $em->createQuery(
+                'SELECT r
+                FROM AppBundle:Reponse r
+                WHERE r.proposition = :id_propo
+                AND r.localisation = :id_loca'
+            );
+
+            $queryLocation->setParameter('id_propo', $proposition->getId());
+
+            $queryLocation->setParameter('id_loca', $id);
+
+            $array['proposition'] = array('label' => $proposition->getLabel(), 'couleur' => $proposition->getCouleur());
+            $array['reponses'] = count($queryLocation->getResult());
+            array_push($arrayReturn, $array);
+        }
+
+        return new JsonResponse($arrayReturn);
     }
 
     /**

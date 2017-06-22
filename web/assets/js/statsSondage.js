@@ -17,22 +17,24 @@ $(document).ready(function()
 	
 	//appliquation des zones sur la carte
     $('#image_map').maphilight();
-
 	$('area').click( function() {
 		var	data = $(this).data("id");
 		$.ajax({
+	       type : 'POST',
 	       url : 'http://localhost/Versus/web/app_dev.php/sondage/1/ajax',
 	       data : 'zone_id=' + data,
-	       type : 'POST',
-	       dataType : 'html',
-	       success : function(code_html, statut){
-	           
-	       },
-
-	       error : function(resultat, statut, erreur){
-
-	       }
-
+	       success: function (data) {
+		       	myDoughnutChart.data.datasets[0].data = [];
+		       	myDoughnutChart.data.labels = [];
+		       	myDoughnutChart.data.datasets[0].backgroundColor = [];
+		       	for(var i= 0; i < data.length; i++)
+				{
+			       	myDoughnutChart.data.datasets[0].data.push(data[i].reponses);
+			       	myDoughnutChart.data.labels.push(data[i].proposition.label);
+			       	myDoughnutChart.data.datasets[0].backgroundColor.push(data[i].proposition.couleur);
+				}
+		       	myDoughnutChart.update();
+           },
 	    });
 
 	});
