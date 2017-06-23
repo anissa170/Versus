@@ -3,56 +3,86 @@
 {% block title %}Versus - Backend{% endblock %}
 
 {% block body %}
-<h1>Page Backend - Sondeurs</h1>
+    {% include 'backend/_nav.html.twig' %}
+    <section>
+        <h1 class="thin">Sondeurs</h1>
 
-<ul>
-    <li><a href="{{ path('homeBackend') }}">Retour</a></li>
-</ul>
+        <table class="centered">
+            <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Email</th>
+                    <th>Dernière connexion</th>
+                    <th>Gerer les droits</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
 
-<table>
-    <thead>
-        <tr>
-            <th>Pseudo</th>
-            <th>Email</th>
-            <th>Dernière connexion</th>
-            <th>Gerer les droits</th>
-            <th>Supprimer</th>
-        </tr>
-    </thead>
+            <tbody>
+            {% for sondeur in sondeurs %}
+                <tr>
+                    <td>{{ sondeur.username }}</td>
+                    <td>{{ sondeur.email }}</td>
+                    <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
+                    <!-- Modal Trigger -->
+                    <td><button class="btn waves-effect waves-light" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
+                    <td>
+                        <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('supprimerUser', {id: sondeur.id}) }}">
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <tbody>
-        {% for sondeur in sondeurs %}
-            <tr>
-                <td>{{ sondeur.username }}</td>
-                <td>{{ sondeur.email }}</td>
-                <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
-                <td><button onclick="showPopup({{ sondeur.id }})">Modifier les droits</button></td>
-                <td><button>Supprimer</button></td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <!-- Modal Structure -->
+        <aside id="modal1" class="modal">
+            <form method="post">
+                <div class="modal-content">
+                    <h4 class="thin center">Modal Header</h4>
 
-<aside id="popupDroits" style="display: none">
-    <h2>Définir les droits pour <span id="pseudo"></span></h2>
-    <form method="post">
-        <label for="droit">Définir en tant que :</label>
-        <input name="idUser" id="idUser" type="hidden">
-        <select name="droit" id="droit">
-            <option value="sondeur">Sondeur</option>
-            <option value="admin">Administrateur</option>
-        </select>
-        <button type="submit">Valider</button>
-    </form>
-</aside>
+                    <label for="droit">Définir en tant que :</label>
+                    <input name="idUser" id="idUser" type="hidden">
+                    <select name="droit" id="droit">
+                        <option value="sondeur">Sondeur</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">Valider</button>
+                </div>
+            </form>
+        </aside>
+
+        <aside id="popupDroits" style="display: none">
+            <h2>Définir les droits pour <span id="pseudo"></span></h2>
+        </aside>
+    </section>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    function showPopup(id) {
-        document.getElementById("popupDroits").style.display = "block";
-        document.getElementById("idUser").value = id;
-    }
-</script>
+    {{ parent() }}
+    <script>
+        function setIdUser(id) {
+            document.getElementById("idUser").value = id;
+        }
+
+        $(document).ready(function(){
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        section {
+            margin-left: 330px;
+            margin-right: 30px;
+        }
+    </style>
 {% endblock %}

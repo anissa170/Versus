@@ -3,29 +3,41 @@
 {% block title %}Versus - Backend{% endblock %}
 
 {% block body %}
-<h1>Page Backend - Sondages</h1>
+    {% include 'backend/_nav.html.twig' %}
+    <section>
+        <h1 class="thin">Proposition</h1>
 
-<ul>
-    <li><a href="{{ path('sondagesBackend') }}">Retour</a></li>
-</ul>
+        <ul>
+            <li><a href="{{ path('sondagesBackend') }}">Retour</a></li>
+        </ul>
 
-<table>
-    <thead>
-    <tr>
-        <th>Titre proposition</th>
-        <th>Nombres de votes</th>
-        <th>Supprimer</th>
-    </tr>
-    </thead>
+        <table>
+            <thead>
+            <tr>
+                <th>Titre proposition</th>
+                <th>Nombres de votes</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
 
-    <tbody>
-    {% for proposition in propositions %}
-        <tr>
-            <td>{{ proposition.label }}</td>
-            <td>42</td>
-            <td><button>Supprimer</button></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+            <tbody>
+            {% for proposition in propositions %}
+                <tr>
+                    <td>{{ proposition.label }}</td>
+                    <td>42</td>
+                    <td><button>Supprimer</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        section {
+            margin-left: 350px;
+        }
+    </style>
 {% endblock %}
