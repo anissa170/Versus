@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Proposition;
 use AppBundle\Entity\Sondage;
 use AppBundle\Entity\Reponse;
-use AppBundle\Form\SondageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
