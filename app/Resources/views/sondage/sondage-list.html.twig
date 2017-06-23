@@ -1,0 +1,7 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+	{% for sondage in sondages %}
+		{{ sondage.titre }}<br>
+	{% endfor %}
+{% endblock %}

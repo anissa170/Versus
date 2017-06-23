@@ -26,7 +26,7 @@ class SondageController extends Controller
             ->getRepository("AppBundle:Sondage")
             ->findAll();
 
-        return $this->render('default/sondage.html.twig', [
+        return $this->render('sondage/sondage-list.html.twig', [
             'sondages' => $sondages
         ]);
     }
@@ -146,7 +146,7 @@ class SondageController extends Controller
         $carte = $sondage->getCarte();
         $localisations = $carte->getLocalisations();
 
-        return $this->render('default/sondage.html.twig', [
+        return $this->render('sondage/sondage-stats.html.twig', [
             'sondage' => $sondage,
             'lines_chart' => $lineResult,
             'carte_chart' => $reponseRegion,
