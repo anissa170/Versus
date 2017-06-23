@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'default/_share.html.twig' %}
 	<div id="popup_map" class="popup_block">
 		{% for error in app.session.flashbag.get('error') %}
 			<p class="error">{{ error }}</p>
@@ -46,5 +47,6 @@
 	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
 	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
 	<script src="{{ asset("assets/js/reponseSondage.js") }}"></script>
+	<script src="{{ asset("assets/js/share.js") }}"></script>
 
 {% endblock %}
