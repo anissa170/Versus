@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Répondre au sondage sur Versus" />
     <meta property="og:description" content="{{ sondage.titre }}" />
-    <meta property="og:image" content="{{ image }}" />
+    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ image }}" />
 
     <meta property="twitter:card" content="summary" />
 {% endblock %}
