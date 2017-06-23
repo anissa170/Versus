@@ -25,7 +25,7 @@
                     <td>{{ sondeur.email }}</td>
                     <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
                     <!-- Modal Trigger -->
-                    <td><button class="btn waves-effect waves-light" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
+                    <td><button class="btn waves-effect waves-light deep-purple lighten-2" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
                     <td>
                         <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('supprimerUser', {id: sondeur.id}) }}">
                             <i class="material-icons">clear</i>
@@ -40,7 +40,7 @@
         <aside id="modal1" class="modal">
             <form method="post">
                 <div class="modal-content">
-                    <h4 class="thin center">Modal Header</h4>
+                    <h4 class="thin center">Modifier les droits</h4>
 
                     <label for="droit">Définir en tant que :</label>
                     <input name="idUser" id="idUser" type="hidden">
