@@ -43,3 +43,5 @@ doit avoir la possibilité de choisir le pays qu'il souhaite sonder (la France e
 Royaume-Uni et ses comtés, etc.)
 
 http://www.jaffredo.com/2012/tutoriel-jquery-creer-ses-propres-cartes-pour-jvectormap-et-jqvmap/
+
+mysql base : root => adminer

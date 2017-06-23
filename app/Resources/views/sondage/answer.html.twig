@@ -6,13 +6,13 @@
 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 	<div id="popup_map" class="popup_block">
 		{% for error in app.session.flashbag.get('error') %}
 			<p class="error">{{ error }}</p>
 		{% endfor %}
 		<div class="map_container">
-			<img id="image_map" src="{{ image_carte }}" alt="Carte"usemap="#map">
+			<img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte"usemap="#map">
 			<map name="map" id="map">
 				{% for zone in localisations %}
 					<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
@@ -20,10 +20,18 @@
 			</map>
 		</div>
 	</div>
-	<form action="{{ path('reponse', { 'id': id }) }}" method="post">
+	{% if sondage.image is not empty %}
+		<img src="{{ sondage.image }}">
+	{% endif %}
+	<p>Crée par : {{ sondage.auteur.userName }}</p>
+	<p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
+	<form action="{{ path('answer', { 'id': id }) }}" method="post">
 		<p class="answer_titile">Choisir votre réponse</p>
 		{% for reponse in reponses %}
-			<input type="radio" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >{{ reponse.label }}
+			<p>
+		      <input name="answer_id" type="radio" id="{{ reponse.id }}" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %}/>
+		      <label for="{{ reponse.id }}">{{ reponse.label }}</label>
+		    </p>
 		{% endfor %}
 		<p class="region_title">La zone choisie est :</p>
 		<p class="region"></p>
