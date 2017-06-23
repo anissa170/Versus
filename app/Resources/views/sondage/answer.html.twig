@@ -28,7 +28,10 @@
 	<form action="{{ path('answer', { 'id': id }) }}" method="post">
 		<p class="answer_titile">Choisir votre réponse</p>
 		{% for reponse in reponses %}
-			<input type="radio" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >{{ reponse.label }}
+			<p>
+		      <input name="answer_id" type="radio" id="{{ reponse.id }}" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %}/>
+		      <label for="{{ reponse.id }}">{{ reponse.label }}</label>
+		    </p>
 		{% endfor %}
 		<p class="region_title">La zone choisie est :</p>
 		<p class="region"></p>
