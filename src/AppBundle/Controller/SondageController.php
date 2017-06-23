@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Proposition;
 use AppBundle\Entity\Sondage;
 use AppBundle\Entity\Reponse;
-use AppBundle\Form\SondageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +16,7 @@ use Carbon\Carbon;
 class SondageController extends Controller
 {
     /**
-     * @Route("/sondages", name="afficherSondages")
+     * @Route("/sondages", name="showSondages")
      */
     public function sondagesAction(Request $request)
     {
@@ -80,7 +79,7 @@ class SondageController extends Controller
     }
 
 	/**
-     * @Route("/sondage/{id}", name="afficherSondage")
+     * @Route("/sondage/{id}", name="showSondage")
      */
     public function sondageAction(Request $request, Sondage $sondage)
     {
@@ -189,7 +188,7 @@ class SondageController extends Controller
     }
 
     /**
-     * @Route("/addSondage", name="ajouterSondage")
+     * @Route("/ajouterSondage", name="addSondage")
      */
     public function addSondageAction(Request $request)
     {
@@ -302,7 +301,7 @@ class SondageController extends Controller
     }
 
     /**
-     * @Route("/editSondage/{id}", name="editerSondage")
+     * @Route("/editerSondage/{id}", name="editSondage")
      */
     public function editSondageAction(Request $request, Sondage $sondage)
     {
@@ -319,7 +318,7 @@ class SondageController extends Controller
     }
 
     /**
-     * @Route("/deleteSondage/{id}", name="supprimerSondage")
+     * @Route("/supprimerSondage/{id}", name="deleteSondage")
      */
     public function deleteSondageAction(Request $request, Sondage $sondage)
     {
