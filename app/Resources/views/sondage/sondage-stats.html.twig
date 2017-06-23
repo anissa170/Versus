@@ -6,7 +6,7 @@
 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <p>{{ sondage.titre }}</p>
 {% if sondage.image is not empty %}
 	<img src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
@@ -23,7 +23,7 @@
 </ul>
 <div id="swipe-region" class="col s12">
 	<div class="map_container">
-		<img id="image_map" src="{{ carte.image }}" alt="Carte"usemap="#map">
+		<img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte"usemap="#map">
 		<map name="map" id="map">
 			{% for zone in localisations %}
 				<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" {% if loop.first %}class="selected"{% endif %}/>

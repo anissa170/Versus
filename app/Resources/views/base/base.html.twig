@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr" class="no-js home ui-state-init">
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">   
+        <meta charset="UTF-8" />
+        {% block meta_share %}
+            <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="When Great Minds Don’t Think Alike" />
+            <meta property="og:description" content="How much does culture influence creative thinking?" />
+            <meta property="og:image" content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+        {% endblock %}
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="initial-scale=1">
         {% block stylesheets %}
