@@ -32,9 +32,10 @@ $(document).ready(function()
 		$(this).addClass('selected');
 		$('.regionLabel span').text($(this).attr("title"));
 		var	data = $(this).data("id");
+		var url = $(this).data("url");
 		$.ajax({
 	       type : 'POST',
-	       url : 'http://localhost/Versus/web/app_dev.php/sondage/1/ajax',
+	       url : url,
 	       data : 'zone_id=' + data,
 	       success: function (data) {
 		       	myDoughnutChart.data.datasets[0].data = [];
