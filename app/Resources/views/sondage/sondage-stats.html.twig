@@ -6,7 +6,7 @@
 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <p>{{ sondage.titre }}</p>
 {% if sondage.image is not empty %}
 	<img src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
