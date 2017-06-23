@@ -31,9 +31,9 @@ class SondageController extends Controller
     }
 
     /**
-     * @Route("/sondage/{id}/answer", name="reponse")
+     * @Route("/sondage/{id}/repondre", name="answer")
      */
-    public function answerAction(Request $request, $id)
+    public function repondreAction(Request $request, $id)
     {	
     	$session = $request->getSession();
 

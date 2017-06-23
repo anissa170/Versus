@@ -9,7 +9,7 @@
 {% block body %}
 <p>{{ sondage.titre }}</p>
 {% if sondage.image is not empty %}
-	<img src="{{ sondage.image }}">
+	<img src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
 {% endif %}
 <p>Crée par : {{ sondage.auteur.userName }}</p>
 <p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
