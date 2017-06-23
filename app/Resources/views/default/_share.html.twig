@@ -2,10 +2,13 @@
     {% set url = app.request.uri %}
 {% endif %}
 
+{% if title is not defined or title == null %}
+	{% set title = "Versus" %}
+{% endif %}
+
 {% if text is not defined or text == null %}
     {% set text = "Partager depuis versus" %}
 {% endif %}
-
 
 <ul class="social">
 	<li>

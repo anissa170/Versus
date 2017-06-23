@@ -8,7 +8,7 @@
 }
 
 .facebook {
-	background-image: url('/assets/img/FB-logo.png');
+	background-image: url('../../assets/img/FB-logo.png');
 	background-size: 30px;
 	height: 30px;
     width: 30px;
@@ -17,7 +17,7 @@
 }
 
 .twitter {
-	background-image: url('/assets/img/TW-logo.png');
+	background-image: url('../../assets/img/TW-logo.png');
 	background-size: 30px;
 	height: 30px;
     width: 30px;
@@ -26,7 +26,7 @@
 }
 
 .google_plus {
-	background-image: url('/assets/img/GP-logo.png');
+	background-image: url('../../assets/img/GP-logo.png');
 	background-size: 30px;
 	height: 30px;
     width: 30px;
