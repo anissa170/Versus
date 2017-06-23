@@ -3,10 +3,30 @@
 {% block title %}Versus - Backend{% endblock %}
 
 {% block body %}
-<h1>Page Backend</h1>
+    {% include 'backend/_nav.html.twig' %}
 
-<ul>
-    <li><a href="{{ path('sondeursBackend') }}">Sondeurs</a></li>
-    <li><a href="{{ path('sondagesBackend') }}">Sondages</a></li>
-</ul>
+    <section>
+        <h1>Page Backend</h1>
+
+        <ul>
+            <li><a href="{{ path('sondeursBackend') }}">Sondeurs</a></li>
+            <li><a href="{{ path('sondagesBackend') }}">Sondages</a></li>
+        </ul>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        section {
+            margin-left: 350px;
+        }
+    </style>
 {% endblock %}
