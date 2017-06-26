@@ -19,13 +19,32 @@ class BackendController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('backend/index.html.twig');
+        $sondages = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Sondage')
+            ->findAll();
+
+        $reponses = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Reponse')
+            ->findAll();
+
+        $utilisateurs = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findAll();
+
+        return $this->render('backend/index.html.twig', [
+            'sondages' => $sondages,
+            'reponses' => $reponses,
+            'utilisateurs' => $utilisateurs
+        ]);
     }
 
     /**
-     * @Route("/sondeurs", name="sondeursBackend")
+     * @Route("/sondeurs/{page}", defaults={"page": "1"}, name="sondeursBackend")
      */
-    public function sondeursAction(Request $request)
+    public function sondeursAction(Request $request, $page)
     {
         if ($request->getMethod() == 'POST') {
             $user = $this
@@ -42,28 +61,48 @@ class BackendController extends Controller
             }
         }
 
-        $sondeurs = $this
+        $rawSondeurs = $this
             ->getDoctrine()
-            ->getRepository("AppBundle:User")
-            ->findAll();
+            ->getRepository("AppBundle:User");
+
+        $sondeurs = $rawSondeurs
+            ->findBy(
+                array(), /* search criteria */
+                array('id' => 'DESC'), /* order */
+                10, // limit
+                10 * ($page - 1)
+            );
+
+        $pages = ceil(count($rawSondeurs->findAll()) / 10);
 
         return $this->render('backend/sondeurs.html.twig', [
-            'sondeurs' => $sondeurs
+            'sondeurs' => $sondeurs,
+            'pages' => $pages
         ]);
     }
 
     /**
-     * @Route("/sondages", name="sondagesBackend")
+     * @Route("/sondages/{page}", defaults={"page": "1"}, name="sondagesBackend")
      */
-    public function sondagesAction()
+    public function sondagesAction($page)
     {
-        $sondages = $this
+        $rawSondages = $this
             ->getDoctrine()
-            ->getRepository("AppBundle:Sondage")
-            ->findAll();
+            ->getRepository("AppBundle:Sondage");
+
+        $sondages = $rawSondages
+            ->findBy(
+                array(), /* search criteria */
+                array('id' => 'DESC'), /* order */
+                10, // limit
+                10 * ($page - 1)
+            );
+
+        $pages = ceil(count($rawSondages->findAll()) / 10);
 
         return $this->render('backend/sondages.html.twig', [
-            'sondages' => $sondages
+            'sondages' => $sondages,
+            'pages' => $pages
         ]);
     }
 

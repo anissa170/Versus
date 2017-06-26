@@ -6,11 +6,26 @@
     {% include 'backend/_nav.html.twig' %}
 
     <section>
-        <h1>Page Backend</h1>
+        <h1 class="thin">Page Backend</h1>
 
-        <ul>
-            <li><a href="{{ path('sondeursBackend') }}">Sondeurs</a></li>
-            <li><a href="{{ path('sondagesBackend') }}">Sondages</a></li>
-        </ul>
+        <div class="row">
+            <div class="col s12 m6">
+                <article class="card">
+                    <div class="card-content">
+                        <span class="card-title">Sondages</span>
+                        <p>Il y a {{ sondages|length }} sondages pour {{ reponses|length }} réponses</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col s12 m6">
+                <article class="card">
+                    <div class="card-content">
+                        <span class="card-title">Utilisateurs</span>
+                        <p>Il y a {{ utilisateurs|length }} sondeurs enregistrés</p>
+                    </div>
+                </article>
+            </div>
+        </div>
     </section>
 {% endblock %}

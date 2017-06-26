@@ -40,5 +40,27 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <ul class="pagination center-align">
+            {% if app.request.attributes.get('page') == 1 %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') - 1 }) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% endif %}
+
+            {% for page in 1..pages  %}
+                {% if app.request.attributes.get('page') == page %}
+                    <li class="active"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if app.request.attributes.get('page') == pages %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') + 1 }) }}"><i class="material-icons">chevron_right</i></a></li>
+            {% endif %}
+        </ul>
     </section>
 {% endblock %}
