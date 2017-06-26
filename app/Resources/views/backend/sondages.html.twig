@@ -42,7 +42,11 @@
         </table>
 
         <ul class="pagination center-align">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% if app.request.attributes.get('page') == 1 %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') - 1 }) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% endif %}
 
             {% for page in 1..pages  %}
                 {% if app.request.attributes.get('page') == page %}
@@ -52,7 +56,11 @@
                 {% endif %}
             {% endfor %}
 
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {% if app.request.attributes.get('page') == pages %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') + 1 }) }}"><i class="material-icons">chevron_right</i></a></li>
+            {% endif %}
         </ul>
     </section>
 {% endblock %}
