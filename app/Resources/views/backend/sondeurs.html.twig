@@ -13,6 +13,7 @@
                     <th>Pseudo</th>
                     <th>Email</th>
                     <th>Dernière connexion</th>
+                    <th>Droit</th>
                     <th>Gerer les droits</th>
                     <th>Supprimer</th>
                 </tr>
@@ -23,6 +24,12 @@
                 <tr>
                     <td>{{ sondeur.username }}</td>
                     <td>{{ sondeur.email }}</td>
+                    <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
+                    {% if sondeur.hasRole('ROLE_ADMIN') %}
+                        <td>Administrateur</td>
+                    {% else %}
+                        <td>Sondeur</td>
+                    {% endif %}
                     <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
                     <!-- Modal Trigger -->
                     <td><button class="btn waves-effect waves-light deep-purple lighten-2" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
@@ -59,6 +66,28 @@
         <aside id="popupDroits" style="display: none">
             <h2>Définir les droits pour <span id="pseudo"></span></h2>
         </aside>
+
+        <ul class="pagination center-align">
+            {% if app.request.attributes.get('page') == 1 %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') - 1 }) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% endif %}
+
+            {% for page in 1..pages  %}
+                {% if app.request.attributes.get('page') == page %}
+                    <li class="active"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if app.request.attributes.get('page') == pages %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') + 1 }) }}"><i class="material-icons">chevron_right</i></a></li>
+            {% endif %}
+        </ul>
     </section>
 {% endblock %}
 

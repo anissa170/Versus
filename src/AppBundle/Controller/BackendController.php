@@ -24,9 +24,9 @@ class BackendController extends Controller
     }
 
     /**
-     * @Route("/sondeurs", name="sondeursBackend")
+     * @Route("/sondeurs/{page}", defaults={"page": "1"}, name="sondeursBackend")
      */
-    public function sondeursAction(Request $request)
+    public function sondeursAction(Request $request, $page)
     {
         if ($request->getMethod() == 'POST') {
             $user = $this
@@ -43,13 +43,23 @@ class BackendController extends Controller
             }
         }
 
-        $sondeurs = $this
+        $rawSondeurs = $this
             ->getDoctrine()
-            ->getRepository("AppBundle:User")
-            ->findAll();
+            ->getRepository("AppBundle:User");
+
+        $sondeurs = $rawSondeurs
+            ->findBy(
+                array(), /* search criteria */
+                array('id' => 'DESC'), /* order */
+                10, // limit
+                10 * ($page - 1)
+            );
+
+        $pages = ceil(count($rawSondeurs->findAll()) / 10);
 
         return $this->render('backend/sondeurs.html.twig', [
-            'sondeurs' => $sondeurs
+            'sondeurs' => $sondeurs,
+            'pages' => $pages
         ]);
     }
 
