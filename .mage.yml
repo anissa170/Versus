@@ -6,6 +6,7 @@ magephp:
             from: ./
             host_path: /var/www/html
             exclude:
+                - ./app/config/parameters.yml
                 - ./var/cache/*
                 - ./var/log/*
                 - ./web/app_dev.php

@@ -1,15 +1,56 @@
-<nav>
-    <div class="nav-wrapper">
-        <div class="col s12">
-            <a href="#!" class="breadcrumb">First</a>
-            <a href="#!" class="breadcrumb">Second</a>
-            <a href="#!" class="breadcrumb">Third</a>
-            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </div>
+{% extends 'layout.html.twig' %}
 
-    <ul id="slide-out" class="side-nav fixed" style="margin-top: 64px;">
-        <li><a href="{{ path('sondagesBackend') }}" class="waves-effect"><i class="material-icons">list</i>Sondages</a></li>
-        <li><a href="{{ path('sondeursBackend') }}" class="waves-effect"><i class="material-icons">person</i>Sondeurs</a></li>
-    </ul>
-</nav>
+{% block body %}
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Versus - Backend</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+            </ul>
+
+            <div class="col s12">
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </div>
+
+        <ul id="slide-out" class="side-nav fixed" style="margin-top: 64px;">
+            <li><a href="{{ path('sondagesBackend') }}" class="waves-effect"><i class="material-icons">list</i>Sondages</a></li>
+            <li><a href="{{ path('sondeursBackend') }}" class="waves-effect"><i class="material-icons">person</i>Sondeurs</a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        section {
+            margin-top: 94px;
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            background-color: #8f7cbc;
+        }
+
+        #sidenav-overlay {
+            z-index: 99;
+        }
+
+        @media screen and (min-width: 993px) {
+            section {
+                margin-left: 330px;
+            }
+        }
+    </style>
+{% endblock %}

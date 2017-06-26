@@ -7,16 +7,16 @@
     <section>
         <h1 class="thin">Sondages</h1>
 
-        <table>
+        <table class="centered">
             <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Image</th>
-                <th>Proposition liés</th>
-                <th>Crée le</th>
-                <th>Supprimer</th>
-            </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Image</th>
+                    <th>Proposition liés</th>
+                    <th>Crée le</th>
+                    <th>Supprimer</th>
+                </tr>
             </thead>
 
             <tbody>
@@ -24,22 +24,21 @@
                 <tr>
                     <td>{{ sondage.id }}</td>
                     <td>{{ sondage.titre }}</td>
-                    <td><a href="{{ asset('assets/img/uploaded/' ~ sondage.image) }}">Image</a></td>
-                    <td><a href="{{ path('propositionsFromSondageBackend', {id: sondage.id}) }}">Propositions</a></td>
+                    {% if sondage.image %}
+                        <td><a href="{{ asset('assets/img/uploaded/' ~ sondage.image) }}">Image</a></td>
+                    {% else %}
+                        <td>Aucune image</td>
+                    {% endif %}
+                    <td><a class="btn waves-effect waves-light deep-purple lighten-2" href="{{ path('propositionsFromSondageBackend', {id: sondage.id}) }}">Propositions</a></td>
                     <td>{{ sondage.creationDate|date("d/m/Y") }}</td>
-                    <td><button><a href="{{ path('deleteSondage', {id: sondage.id}) }}">Supprimer</a></button></td>
+                    <td>
+                        <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('deleteSondage', {id: sondage.id}) }}">
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </section>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        section {
-            margin-left: 350px;
-        }
-    </style>
 {% endblock %}
