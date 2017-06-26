@@ -1,0 +1,22 @@
+.card-action {
+	display: flex;
+}
+.register {
+	margin: auto !important;
+	margin-left: 0!important;
+}
+.main {
+	margin-top: 15px;
+}
+.container {
+	padding: 10px 0;
+}
+.prefix {
+	margin-top: 7px;
+}
+.remember_me_container {
+	margin-left: 5px;
+}
+._submit {
+	background-color: #26a69a;
+}

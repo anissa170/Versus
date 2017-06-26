@@ -1,0 +1,60 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/loginAndInscription.css") }}">
+
+{% endblock %}
+
+{% block body %}
+    {% include 'default/header.html.twig' %}
+
+	{% block content %}
+
+		<div class="container main">
+	        <div class="row">
+	        	<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+	     			<div class="card z-depth-3">
+					{% block fos_user_content %}
+					    <form class="page-form container" role="form" action="{{ path("fos_user_security_check") }}" method="post">
+
+							{% if error %}
+								<div class="red-text">
+							        <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+							    </div>
+							{% endif %}
+
+					    	{% if csrf_token %}
+						        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+						    {% endif %}
+
+						    <p class="input-field form-block interactive-label">
+          						<i class="material-icons prefix">account_circle</i>
+						    	<input id="login-username" type="text" class="form-control hide-label" name="_username" required="required" placeholder="Nom d'utilisateur"/>
+						    </p>
+
+						    <p class="input-field form-block interactive-label">
+						    	<i class="material-icons prefix">vpn_key</i>
+								<input id="login-password" type="password" class="form-control hide-label" name="_password" required="required" placeholder="Mot de passe">
+							</p>
+
+							<p class="remember_me_container">
+							    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+							    <label for="remember_me">Se souvenir de moi</label>
+							</p>
+            				<div class="card-action">
+								<a href="{{ path("register") }}" class="round-btn border-btn register">S’inscrire</a>
+							    <button class="right btn waves-effect waves-light" type="submit" name="action" id="_submit">Se connecter
+								    <i class="material-icons right">send</i>
+								</button>
+								<div style="clear: both;"></div> 
+							</div>
+						</form>
+					{% endblock fos_user_content %}
+					</div>
+	        	</div>
+	        </div>
+	    </div>
+	{% endblock content %}
+
+{% endblock %}
