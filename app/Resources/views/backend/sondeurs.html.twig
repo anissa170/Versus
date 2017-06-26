@@ -30,7 +30,6 @@
                     {% else %}
                         <td>Sondeur</td>
                     {% endif %}
-                    <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
                     <!-- Modal Trigger -->
                     {% if app.user == sondeur %}
                         <td><button class="btn disabled" data-target="modal1">Modifier les droits</button></td>
