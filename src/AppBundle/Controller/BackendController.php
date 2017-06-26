@@ -19,7 +19,26 @@ class BackendController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('backend/index.html.twig');
+        $sondages = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Sondage')
+            ->findAll();
+
+        $reponses = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Reponse')
+            ->findAll();
+
+        $utilisateurs = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findAll();
+
+        return $this->render('backend/index.html.twig', [
+            'sondages' => $sondages,
+            'reponses' => $reponses,
+            'utilisateurs' => $utilisateurs
+        ]);
     }
 
     /**
