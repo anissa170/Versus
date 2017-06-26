@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sondage;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -53,17 +54,27 @@ class BackendController extends Controller
     }
 
     /**
-     * @Route("/sondages", name="sondagesBackend")
+     * @Route("/sondages/{page}", defaults={"page": "1"}, name="sondagesBackend")
      */
-    public function sondagesAction()
+    public function sondagesAction($page)
     {
-        $sondages = $this
+        $rawSondages = $this
             ->getDoctrine()
-            ->getRepository("AppBundle:Sondage")
-            ->findAll();
+            ->getRepository("AppBundle:Sondage");
+
+        $sondages = $rawSondages
+            ->findBy(
+                array(), /* search criteria */
+                array('id' => 'DESC'), /* order */
+                10, // limit
+                10 * ($page - 1)
+            );
+
+        $pages = ceil(count($rawSondages->findAll()) / 10);
 
         return $this->render('backend/sondages.html.twig', [
-            'sondages' => $sondages
+            'sondages' => $sondages,
+            'pages' => $pages
         ]);
     }
 

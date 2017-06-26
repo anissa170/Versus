@@ -40,5 +40,19 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <ul class="pagination center-align">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+
+            {% for page in 1..pages  %}
+                {% if app.request.attributes.get('page') == page %}
+                    <li class="active"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
     </section>
 {% endblock %}
