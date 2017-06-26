@@ -3,7 +3,7 @@
 {% block body %}
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Versus - Backend</a>
+            <a href="{{ path('homeBackend') }}" class="brand-logo thin">Versus - Backend</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{{ path('fos_user_security_logout') }}"><i class="material-icons right">input</i>Déconnexion</a></li>
             </ul>
@@ -45,6 +45,10 @@
 
         #sidenav-overlay {
             z-index: 99;
+        }
+
+        nav .brand-logo {
+            padding-left: 15px;
         }
 
         @media screen and (min-width: 993px) {
