@@ -32,12 +32,18 @@
                     {% endif %}
                     <td>{{ sondeur.lastLogin|date("d/m/Y") }}</td>
                     <!-- Modal Trigger -->
-                    <td><button class="btn waves-effect waves-light deep-purple lighten-2" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
-                    <td>
-                        <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('supprimerUser', {id: sondeur.id}) }}">
-                            <i class="material-icons">clear</i>
-                        </a>
-                    </td>
+                    {% if app.user == sondeur %}
+                        <td><button class="btn disabled" data-target="modal1">Modifier les droits</button></td>
+                        <td><a class="btn-floating btn-large disabled"><i class="material-icons">clear</i></a>
+                        </td>
+                    {% else %}
+                        <td><button class="btn waves-effect waves-light deep-purple lighten-2" onclick="setIdUser({{ sondeur.id }})" data-target="modal1">Modifier les droits</button></td>
+                        <td>
+                            <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('supprimerUser', {id: sondeur.id}) }}">
+                                <i class="material-icons">clear</i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
