@@ -10,11 +10,11 @@
   <div class="body-content">
     <nav class="nav-extended">
       <div class="nav-wrapper">
-        <a class="logo-text" href="#">
+        <a class="logo-text" href="{{ path('homepage') }}">
           <img alt="Logo" class="site-logo" src="{{asset('assets/img/logo_violet.png')}}"/>
           <div class="site-text">Versus</div>
         </a>
-        <a id="nav-mobile" class="right hide-on-med-and-down" href="#">
+        <a id="nav-mobile" class="right hide-on-med-and-down" href="{{ path('login') }}">
           <img alt="icone utilisateur" id="nav-mobile" class="right hide-on-med-and-down" src="{{asset ('assets/img/ic_supervisor_account_black_24dp_2x.png')}}"/> 
         </a>
       </div>
@@ -32,28 +32,28 @@
         
       <div class="row logo-content">
         <div class="container">
-          <div class="col s12 m12 l3 flex-box">
-            <div id="circle">
+          <div class="col s6 m6 l3 flex-box">
+            <div id="circle" class="circle">
               <img alt="icone utilisateur" class="brand-logo center" class="brand-logo center" src="{{asset('assets/img/ic_supervisor_account_black_48dp_2x.png')}}"></div>
             <div class="center-align">Inscrivez-vous.<br/></div>
           </div>
 
-          <div class="col s12 m12 l3 flex-box">
-            <div id="circle">
+          <div class="col s6 m6 l3 flex-box">
+            <div id="circle" class="circle">
               <img alt="icone utilisateur" class="brand-logo center" class="brand-logo center" src="{{asset ('assets/img/pencil.png')}}">
             </div>
             <div class="center-align" >Créez votre sondage.<br/></div>
           </div>
 
-          <div class="col s12 m12 l3 flex-box">
-            <div id="circle">
+          <div class="col s6 m6 l3 flex-box">
+            <div id="circle" class="circle">
               <img alt="icone utilisateur" class="brand-logo center" class="brand-logo center" src="{{asset('assets/img/map.png')}}">
             </div>
             <div class="center-align"> Désignez un pays pour votre sondage.<br/></div>
           </div>
 
-          <div class="col s12 m12 l3 flex-box">
-            <div id="circle">
+          <div class="col s6 m6 l3 flex-box">
+            <div id="circle" class="circle">
               <img alt="icone utilisateur" class="brand-logo center" class="brand-logo center" src="{{asset('assets/img/share.png')}}">
             </div>
             <div class="center-align">Et partagez le avec vos amis et vos proches !<br/> </div>
@@ -64,9 +64,10 @@
   </div>
 
 
+
   <footer class="page-footer" id="purple-v">
     <div class="container footer-content">
-      <a class="waves-effect waves-light btn-large" id="gray-v" >Créez le votre !</a>
+      <a href="{{ path('addSondage') }}" class="waves-effect waves-light btn-large" id="gray-v" >Créez le votre !</a>
     </div>
     <div class="footer-copyright">
       <div class="container">
@@ -80,7 +81,25 @@
 
 {% block javascripts %}
   {{ parent() }}
+  <script src="//code.jquery.com/color/jquery.color-2.1.2.js"></script>
   <script type="text/javascript">$(".dropdown-button").dropdown();</script>
+  <script type="text/javascript">
+    var i = 0;
+    var $elements = $('.circle');
+    var nbElement = $elements.size();
+
+    function change() {
+      $($elements[i]).toggleClass('item--blur');
+      if (i == 0 && $($elements[nbElement - 1]).hasClass('item--blur')) {
+        i = nbElement;
+      }
+      $($elements[i - 1]).toggleClass('item--blur');
+
+      i = (i + 1) % nbElement;
+    }
+
+    setInterval(change, 3000);
+  </script>
 {% endblock %}
 
 

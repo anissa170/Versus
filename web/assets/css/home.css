@@ -1,5 +1,6 @@
 html {
 	height: 100%;
+  	box-sizing: border-box;
 }
 
 .body-content {
@@ -48,14 +49,28 @@ html {
     margin-bottom: 30px; 
 }
 
-#circle {
-	background:white;
+.circle {
+	background-color: white;
 	border-radius:50%;
 	width:150px;
 	height:150px;
 	display: flex;
 	margin-right: auto;
     margin-left: auto;
+    transition: all 1s ease-out;
+}
+
+.item--blur {
+	background-color: #8f7cbc;
+}
+
+.circle img {
+    transition: all 1s ease-out;
+}
+
+.item--blur img{
+    -webkit-filter: grayscale(1) invert(1);
+    filter: grayscale(1) invert(1);
 }
 
 .brand-logo {
@@ -76,6 +91,7 @@ body {
   	min-height: 100%;
 	flex-direction: column;
 	background-color: #f5f5f5;
+	padding-bottom: 200px;
 }
 
 .row {
@@ -90,10 +106,9 @@ main {
 	z-index: 1;
 	height: 200px;
 	width: 100%;
-
-right: 0;
-bottom: 0;
-left: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
     position: absolute;
 }
 
