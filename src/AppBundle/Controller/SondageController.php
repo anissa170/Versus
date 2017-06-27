@@ -193,7 +193,7 @@ class SondageController extends Controller
     public function addSondageAction(Request $request)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('fos_user_security_login');
+            return $this->redirectToRoute('login');
         }
 
         if ($request->getMethod() == 'POST') {
