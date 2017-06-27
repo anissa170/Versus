@@ -107,7 +107,15 @@ class BackendController extends Controller
         ]);
     }
 
-
+    /**
+     * @Route("/sondage/{id}", name="propositionsFromSondageBackend")
+     */
+    public function propositionsFromSondageAction(Sondage $sondage)
+    {
+        return $this->render('backend/propositions.html.twig', [
+            'propositions' => $sondage->getPropositions()
+        ]);
+    }
 
     /**
      * @Route("/cartes/{page}", defaults={"page": "1"}, name="cartesBackend")
@@ -133,8 +141,6 @@ class BackendController extends Controller
             'pages' => $pages
         ]);
     }
-
-
 
     /**
      * @Route("/cartes/{id}/region", name="regionsFromCarteBackend")
