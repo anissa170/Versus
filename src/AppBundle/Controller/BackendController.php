@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sondage;
+use AppBundle\Entity\Carte;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -103,6 +104,46 @@ class BackendController extends Controller
         return $this->render('backend/sondages.html.twig', [
             'sondages' => $sondages,
             'pages' => $pages
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/cartes/{page}", defaults={"page": "1"}, name="cartesBackend")
+     */
+    public function cartesAction($page)
+    {
+        $rawSondages = $this
+            ->getDoctrine()
+            ->getRepository("AppBundle:Carte");
+
+        $cartes = $rawSondages
+            ->findBy(
+                array(), /* search criteria */
+                array('id' => 'DESC'), /* order */
+                10, // limit
+                10 * ($page - 1)
+            );
+
+        $pages = ceil(count($rawSondages->findAll()) / 10);
+
+        return $this->render('backend/cartes.html.twig', [
+            'cartes' => $cartes,
+            'pages' => $pages
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/cartes/{id}/region", name="regionsFromCarteBackend")
+     */
+    public function regionsFromCarteAction(Carte $carte)
+    {
+        return $this->render('backend/regions.html.twig', [
+            'carte' => $carte,
+            'regions' => $carte->getLocalisations()
         ]);
     }
 

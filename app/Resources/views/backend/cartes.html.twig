@@ -1,0 +1,68 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block body %}
+    {% include 'backend/_nav.html.twig' %}
+    <section>
+        <h1 class="thin">Cartes</h1>
+
+        <table class="centered">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Image</th>
+                    <th>Region liés</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for carte in cartes %}
+                <tr>
+                    <td>{{ carte.nom }}</td>
+                    <td><a target="_blank" href="{{ asset("assets/img/uploaded/" ~ carte.image) }}"><img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" height="100px"></a></td>
+                    <td><a class="btn waves-effect waves-light deep-purple lighten-2" href="{{ path('regionsFromCarteBackend', {id: carte.id}) }}">Region</a></td>
+                    <td>
+                        <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('deleteSondage', {id: carte.id}) }}">
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="pagination center-align">
+            {% if app.request.attributes.get('page') == 1 %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') - 1 }) }}"><i class="material-icons">chevron_left</i></a></li>
+            {% endif %}
+
+            {% for page in 1..pages  %}
+                {% if app.request.attributes.get('page') == page %}
+                    <li class="active"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: page}) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if app.request.attributes.get('page') == pages %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            {% else %}
+                <li class="waves-effect"><a href="{{ path('sondagesBackend', {page: app.request.attributes.get('page') + 1 }) }}"><i class="material-icons">chevron_right</i></a></li>
+            {% endif %}
+        </ul>
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        section {
+            margin-left: 330px;
+            margin-right: 30px;
+        }
+    </style>
+{% endblock %}

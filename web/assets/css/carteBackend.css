@@ -1,0 +1,13 @@
+.map_container div {
+ 	background-repeat: no-repeat;
+ }
+
+ #image_map {
+ 	height: 150px;
+ }
+
+ @media screen and (max-width: 640px) {
+    /*#image_map {
+	 	height: 200px;
+	 }*/
+ }

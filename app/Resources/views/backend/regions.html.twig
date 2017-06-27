@@ -1,0 +1,55 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/carteBackend.css") }}">
+
+{% endblock %}
+
+{% block body %}
+    {% include 'backend/_nav.html.twig' %}
+    <section>
+        <h1 class="thin">Regions</h1>
+
+        <ul>
+            <li><a href="{{ path('cartesBackend') }}">Retour</a></li>
+        </ul>
+
+        <table class="centered">
+            <thead>
+            <tr>
+                <th>Titre de la region</th>
+                <th>Aperçu de l'emplacement</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for zone in regions %}
+                <tr>
+                    <td>{{ zone.label }}</td>
+                    <td>
+						<div class="map_container">
+							<img class="image_map" id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" usemap="#map{{ zone.id }}">
+							<map name="map{{ zone.id }}" id="map{{ zone.id }}" class="map">
+									<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
+							</map>
+						</div>
+					</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
+	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
+	<script src="{{ asset("assets/js/carteBackend.js") }}"></script>
+
+{% endblock %}
