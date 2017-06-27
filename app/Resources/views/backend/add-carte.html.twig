@@ -1,0 +1,154 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Versus - Backend{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/carteBackend.css") }}">
+	<style type="text/css">
+	#img_container {
+		display: inline-block;
+	}
+	#map_point {
+    	position: absolute;
+	}
+	#preview {
+    	position: relative;
+    	z-index: -1;
+	}
+	</style>
+
+{% endblock %}
+
+{% block body %}
+    {% include 'backend/_nav.html.twig' %}
+    <section>
+        <h1 class="thin">Créer une carte</h1>
+
+        <ul>
+            <li><a href="{{ path('cartesBackend') }}">Retour</a></li>
+        </ul>
+	    <form method="post">
+	          <input type="text" name="name" placeholder="Nom">
+	          <input type="file" name="pic" accept="image/*" id="imgInp">
+	          <div id="img_container">
+		          <canvas id="map_point"></canvas>
+		          <img id="preview" src="#" alt="your image" />
+	          </div>
+	    </form>
+    </section>
+{% endblock %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
+	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
+	<script src="{{ asset("assets/js/carteBackend.js") }}"></script>
+	<script type="text/javascript">
+
+    	function changeCanvas() {
+    		var c=document.getElementById("map_point");
+			var ctx=c.getContext("2d");
+			
+			// ctx.save();
+			// ctx.clearRect(0, 0, c.width, c.height);
+			// ctx.restore();
+
+	        c.height = $('#preview').height();
+	        c.width = $('#preview').width();
+
+		    zoneList = new Array();
+	    	firstPoint = null;
+	    	currentZone = null;
+
+    	}
+
+	    function readURL(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            
+	            reader.onload = function (e) {
+	                $('#preview').attr('src', e.target.result);
+	                setTimeout(changeCanvas, 100);
+	            }
+
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+	    
+	    $("#imgInp").change(function(){
+	        readURL(this);
+	    });
+
+	    class Point {
+		  constructor(posX, posY) {
+		    this.x = posX;
+		    this.y = posY;
+		  }
+		}
+
+	    var zoneList = new Array();
+    	var firstPoint = null;
+    	var currentZone = null;
+
+    	function drawLine(previewPoint, currentPoint) {
+    		var c=document.getElementById("map_point");
+			var ctx=c.getContext("2d");
+
+			ctx.beginPath(); 
+			ctx.lineWidth="1";
+			ctx.strokeStyle="red"; 
+			ctx.moveTo(previewPoint.x,previewPoint.y);
+			ctx.lineTo(currentPoint.x,currentPoint.y);
+			ctx.stroke();
+    	}
+
+    	function drawPoint(point) {
+    		var c=document.getElementById("map_point");
+			var ctx=c.getContext("2d");
+			console.log(point);
+
+			ctx.strokeRect(point.x,point.y,1,1);
+    	}
+
+	    function createFirstPoint(point) {
+	    	firstPoint = point;
+	    	currentZone = new Array();
+	    	currentZone.push(firstPoint);
+	    	drawPoint(point);
+	    }
+
+	    function addPoint(point) {
+	    	var previewPoint = currentZone[currentZone.length - 1];
+	    	currentZone.push(point);
+	    	drawPoint(point);
+	    	drawLine(previewPoint, point);
+	    }
+
+	    function finishZone() {
+	    	var previewPoint = currentZone[currentZone.length - 1];
+	    	zoneList.push(currentZone);
+	    	drawLine(previewPoint, firstPoint);
+	    	firstPoint = null;
+	    	currentZone = null;
+	    }
+
+	    $('#map_point').click(function(e) {
+	        var posX = e.pageX - $(this).position().left;
+	        var posY = e.pageY - $(this).position().top;
+	        var point = new Point(posX,posY);
+	        if (firstPoint == null) {
+	        	createFirstPoint(point);
+	        }
+	        else if (point == firstPoint) {
+	        	finishZone();
+	        }
+	        else {
+	        	addPoint(point);
+	        }
+	    });
+	</script>
+
+{% endblock %}

@@ -148,6 +148,17 @@ class BackendController extends Controller
     }
 
     /**
+     * @Route("/carte/ajouter", name="addCarte")
+     */
+    public function ajouterCarteAction()
+    {
+        return $this->render('backend/add-carte.html.twig', [
+
+        ]);
+    }
+
+
+    /**
      * @Route("/sondage/{id}", name="propositionsFromSondageBackend")
      */
     public function propositionsFromSondageAction(Sondage $sondage)
