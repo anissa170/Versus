@@ -19,7 +19,7 @@ class Proposition
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Reponse", mappedBy="proposition")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Reponse", mappedBy="proposition", cascade={"persist", "remove"})
      */
     private $reponses;
 
