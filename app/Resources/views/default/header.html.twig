@@ -1,4 +1,4 @@
-<nav class="nav-extended" style="background-color:8f7cbc;">
+<!-- <nav class="nav-extended" style="background-color:8f7cbc;">
 	<div class="nav-wrapper">
 		<img data-activates="mobile-demo" class="brand-logo " style="height:400px;margin-top:-140px;margin-left:-250px;"  src="{{ asset('assets/img/logo_blanc.png')}}" />
 	  <a href="#!" class="brand-logo "  style="margin-top:30px;margin-left:155px">Versus</a>
@@ -11,4 +11,40 @@
 
 	</div>
 
-</nav>
+</nav> -->
+
+{% if title is not defined %}
+  {% set title ="" %}
+{% endif %} 
+
+  <nav class="nav-extended" id="color-purple">
+    <div class="nav-wrapper">
+
+      <a href="#!" class="brand-logo left">
+         <img alt="Logo" style=" height: 50px;
+    margin: 20px 0px auto 0px;" src="assets/img/logo_blanc.png"/>
+        <div class="left-align " style="margin-top:-70px;margin-left:60px;">Versus</div>
+
+      </a>
+
+    </div>
+            <a id="utilisateur-mobile" class="right-align" >
+          <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="assets/img/ic_supervisor_account_black_24dp_2x.png"/> 
+        </a>
+    <div class="nav-content center">
+      <span class="nav-title ">{{ title }}</span>
+
+    </div>
+  </nav>
+
+  <style>
+
+#utilisateur-mobile {
+  position: absolute;
+    right: 10px;
+    top: 10px;
+}
+#color-purple{
+  background-color: #8f7cbc;
+}
+  </style>

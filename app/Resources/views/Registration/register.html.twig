@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'default/header.html.twig' %}
+    {% include 'default/header.html.twig' with { title : 'Enregistrez-vous !' }%}
+  
 	{% block content %}
 		<div class="container main">
 	        <div class="row">
@@ -65,13 +66,13 @@
 								    <label for="remember_me">Se souvenir de moi</label>
 								</p>
 
-		        				<div class="card-action">
-									<a href="{{ path("login") }}" class="round-btn border-btn register">Se connecter</a>
-								    <button class="right btn waves-effect waves-light" type="submit" name="action" id="_submit">S'enregister
+		        		
+									<a href="{{ path("login") }}" class="round-btn border-btn register" id="black-text">SE CONNECTER</a>
+								    <button class="right btn waves-effect waves-light " type="submit" name="action" id="_submit">S'enregister
 									    <i class="material-icons right">send</i>
 									</button>
-									<div style="clear: both;"></div> 
-								</div>
+									<div id="clear-bottom"></div> 
+								
 							</form>
 						{% endblock fos_user_content %}
 					</div>

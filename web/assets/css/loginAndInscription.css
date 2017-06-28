@@ -20,3 +20,28 @@
 ._submit {
 	background-color: #26a69a;
 }
+
+.btn:hover, .btn-large:hover {
+    background-color: #8f7cbc !important;
+}
+.btn, .btn-large {
+
+    background-color: #8f7cbc !important;
+}
+
+.input-field .prefix.active{
+	color:#8f7cbc !important;
+}
+
+[type="checkbox"]:checked+label:before{
+	    border-right: 2px solid #8f7cbc;
+    border-bottom: 2px solid #8f7cbc;
+}
+
+#black-text{
+color:black;	
+}
+
+#clear-bottom{
+clear: both;
+}
