@@ -10,121 +10,121 @@
 
     {% include 'default/header.html.twig' with { title : 'Création de sondage' }%}
 
-{% block content %}
-    <form method="post" class="row" enctype="multipart/form-data">
-        <article class="col s12 m3">
-            <div class="card-panel">
-                <div class="row">
-                    <img id="imgSondage" class="responsive-img" src="">
-                </div>
+    {% block content %}
+        <form method="post" class="row" enctype="multipart/form-data">
+            <article class="col s12 m3">
+                <div class="card-panel">
+                    <div class="row">
+                        <img id="imgSondage" class="responsive-img" src="">
+                    </div>
 
-                <div class="row">
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>Image</span>
-                            <input id="imgInp" type="file" name="image">
+                    <div class="row">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Image</span>
+                                <input id="imgInp" type="file" name="image">
+                            </div>
+
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="carte" name="carte" required>
+                                <option value="" disabled selected>Selectionner une carte</option>
+                                {% for carte in cartes %}
+                                    <option value="{{ carte.id }}">{{ carte.nom }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="carte">Cartes</label>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="col s12 m9">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="titre" type="text" name="titre" class="validate" required>
+                            <label for="titre">Question</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="proposition_1" name="proposition_1" type="text" required>
+                            <label for="proposition_1">Proposition 1</label>
                         </div>
 
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
+                        <div class="input-field col s2">
+                            <input type="color" id="proposition_1_color" name="proposition_1_color" class="icons">
+              
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="proposition_2" name="proposition_2" type="text" required>
+                            <label for="proposition_2">Proposition 2</label>
+                        </div>
+
+                        <div class="input-field col s2">
+                            <input type="color" id="proposition_2_color" name="proposition_2_color" class="icons">
+                           
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="proposition_3" name="proposition_3" type="text">
+                            <label for="proposition_3">Proposition 3</label>
+                        </div>
+
+                        <div class="input-field col s2">
+                            <input type="color" id="proposition_3_color" name="proposition_3_color" class="icons">
+                      
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="proposition_4" name="proposition_4" type="text">
+                            <label for="proposition_4">Proposition 4</label>
+                        </div>
+
+                        <div class="input-field col s2">
+                            <input type="color" id="proposition_4_color" name="proposition_4_color" class="icons">
+                         
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="proposition_5" name="proposition_5" type="text">
+                            <label for="proposition_5">Proposition 5</label>
+                        </div>
+
+                        <div class="input-field col s2">
+                            <input type="color" id="proposition_5_color" name="proposition_5_color" class="icons">
+                         
+                        </div>
+                    </div>
+
+                    <button class="btn waves-effect waves-light deep-purple lighten-2" type="submit">
+                        Sauvegarder
+                    </button>
+
+                    <button class="btn waves-effect waves-light deep-purple lighten-2 right" type="submit">
+                        Publier
+                    </button>
                 </div>
-
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select id="carte" name="carte" required>
-                            <option value="" disabled selected>Selectionner une carte</option>
-                            {% for carte in cartes %}
-                                <option value="{{ carte.id }}">{{ carte.nom }}</option>
-                            {% endfor %}
-                        </select>
-                        <label for="carte">Cartes</label>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <article class="col s12 m9">
-            <div class="card-panel">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="titre" type="text" name="titre" class="validate" required>
-                        <label for="titre">Question</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="proposition_1" name="proposition_1" type="text" required>
-                        <label for="proposition_1">Proposition 1</label>
-                    </div>
-
-                    <div class="input-field col s2">
-                        <input type="color" id="proposition_1_color" name="proposition_1_color" class="icons">
-          
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="proposition_2" name="proposition_2" type="text" required>
-                        <label for="proposition_2">Proposition 2</label>
-                    </div>
-
-                    <div class="input-field col s2">
-                        <input type="color" id="proposition_2_color" name="proposition_2_color" class="icons">
-                       
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="proposition_3" name="proposition_3" type="text">
-                        <label for="proposition_3">Proposition 3</label>
-                    </div>
-
-                    <div class="input-field col s2">
-                        <input type="color" id="proposition_3_color" name="proposition_3_color" class="icons">
-                  
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="proposition_4" name="proposition_4" type="text">
-                        <label for="proposition_4">Proposition 4</label>
-                    </div>
-
-                    <div class="input-field col s2">
-                        <input type="color" id="proposition_4_color" name="proposition_4_color" class="icons">
-                     
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="proposition_5" name="proposition_5" type="text">
-                        <label for="proposition_5">Proposition 5</label>
-                    </div>
-
-                    <div class="input-field col s2">
-                        <input type="color" id="proposition_5_color" name="proposition_5_color" class="icons">
-                     
-                    </div>
-                </div>
-
-                <button class="btn waves-effect waves-light deep-purple lighten-2" type="submit">
-                    Sauvegarder
-                </button>
-
-                <button class="btn waves-effect waves-light deep-purple lighten-2 right" type="submit">
-                    Publier
-                </button>
-            </div>
-        </article>
-    </form>
-{% endblock %}
+            </article>
+        </form>
+    {% endblock %}
 {% endblock %}
 
 {% block javascripts %}
