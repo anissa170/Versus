@@ -7,7 +7,10 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'default/header.html.twig' %}
+
+    {% include 'default/header.html.twig' with { title : 'Connectez-vous !' }%}
+
+
 	{% block content %}
 
 		<div class="container main">
@@ -41,13 +44,13 @@
 							    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
 							    <label for="remember_me">Se souvenir de moi</label>
 							</p>
-            				<div class="card-action">
-								<a href="{{ path("register") }}" class="round-btn border-btn register">S’inscrire</a>
-							    <button class="right btn waves-effect waves-light" type="submit" name="action" id="_submit">Se connecter
-								    <i class="material-icons right">send</i>
+            				
+								<a href="{{ path("register") }}" class="round-btn border-btn register" id="black-text">S’inscrire</a>
+							    <button class="right btn waves-effect waves-light" type="submit" name="action" id="_submit" >Se connecter
+								    <i class="material-icons right"></i>
 								</button>
-								<div style="clear: both;"></div> 
-							</div>
+								<div id="clear-bottom"></div> 
+							
 						</form>
 					{% endblock fos_user_content %}
 					</div>
