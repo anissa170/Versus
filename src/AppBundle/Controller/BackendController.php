@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sondage;
 use AppBundle\Entity\Carte;
+use AppBundle\Entity\Localisation;
+use AppBundle\Entity\Point;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -146,8 +148,34 @@ class BackendController extends Controller
     /**
      * @Route("/carte/ajouter", name="addCarte")
      */
-    public function ajouterCarteAction()
+    public function ajouterCarteAction(Request $request)
     {
+        if ($request->getMethod() == 'POST') {
+            $carteName = $request->request->get('name');
+            $carteImage = $request->request->get('pic');
+            $cartePoints = json_decode($request->request->get('obj')[0]);
+
+            $carte = new Carte();
+            $carte->setNom($carteName);
+            $carte->setImage($carteImage);
+            foreach ($cartePoints as $key => $localisationObject) {
+                $localisation = new Localisation();
+                $localisation->setLabel($localisationObject->name);
+                foreach ($localisationObject->points as $key => $pointObject) {
+                    $point = new Point();
+                    $point->setPosX($pointObject->x);
+                    $point->setPosY($pointObject->y);
+                    $localisation->addPoint($point);
+                }
+                $carte->addLocalisation($localisation);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($carte);
+            $em->flush();
+
+            return $this->redirectToRoute('cartesBackend');
+        }
         return $this->render('backend/add-carte.html.twig', [
 
         ]);

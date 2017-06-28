@@ -28,13 +28,15 @@
         <ul>
             <li><a href="{{ path('cartesBackend') }}">Retour</a></li>
         </ul>
-	    <form method="post">
+	    <form method="post" action="{{ path("addCarte") }}">
 	          <input type="text" name="name" placeholder="Nom">
 	          <input type="file" name="pic" accept="image/*" id="imgInp">
 	          <div id="img_container">
 		          <canvas id="map_point"></canvas>
 		          <img id="preview" src="#" alt="your image" />
 	          </div>
+	          <input id="obj" type="hidden" name="obj[]">
+	          <input type="submit" name="submit">
 	    </form>
     </section>
 {% endblock %}
@@ -99,7 +101,7 @@
 
 			ctx.beginPath(); 
 			ctx.lineWidth="1";
-			ctx.strokeStyle="red"; 
+			ctx.strokeStyle="black"; 
 			ctx.moveTo(previewPoint.x,previewPoint.y);
 			ctx.lineTo(currentPoint.x,currentPoint.y);
 			ctx.stroke();
@@ -108,31 +110,44 @@
     	function drawPoint(point) {
     		var c=document.getElementById("map_point");
 			var ctx=c.getContext("2d");
-			console.log(point);
 
 			ctx.strokeRect(point.x,point.y,1,1);
     	}
 
 	    function createFirstPoint(point) {
 	    	firstPoint = point;
-	    	currentZone = new Array();
-	    	currentZone.push(firstPoint);
+	    	currentZone = new Object();
+	    	currentZone['name'] = null;
+	    	currentZone['points'] = new Array();
+	    	currentZone['points'].push(firstPoint);
 	    	drawPoint(point);
 	    }
 
 	    function addPoint(point) {
-	    	var previewPoint = currentZone[currentZone.length - 1];
-	    	currentZone.push(point);
+	    	var previewPoint = currentZone['points'][currentZone['points'].length - 1];
+	    	currentZone['points'].push(point);
 	    	drawPoint(point);
 	    	drawLine(previewPoint, point);
 	    }
 
 	    function finishZone() {
-	    	var previewPoint = currentZone[currentZone.length - 1];
+	    	var previewPoint = currentZone['points'][currentZone['points'].length - 1];
+	    	currentZone['name'] = prompt("Entrez le nom de la zone", "Paris");
 	    	zoneList.push(currentZone);
 	    	drawLine(previewPoint, firstPoint);
 	    	firstPoint = null;
 	    	currentZone = null;
+	    	$('#obj').val(JSON.stringify(zoneList));
+	    }
+
+	    function isFirstPoint(point){
+	    	var nbPixelEnable = 5;
+	    	if( point.x >= (firstPoint.x - nbPixelEnable) && (firstPoint.x + nbPixelEnable) >= point.x) {
+				if( point.y >= (firstPoint.y - nbPixelEnable) && (firstPoint.y + nbPixelEnable) >= point.y) {
+					return true;
+		    	}
+	    	}
+	    	return false;
 	    }
 
 	    $('#map_point').click(function(e) {
@@ -142,7 +157,7 @@
 	        if (firstPoint == null) {
 	        	createFirstPoint(point);
 	        }
-	        else if (point == firstPoint) {
+	        else if (point == firstPoint || isFirstPoint(point)) {
 	        	finishZone();
 	        }
 	        else {
