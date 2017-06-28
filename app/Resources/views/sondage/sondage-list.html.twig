@@ -30,8 +30,14 @@
 					<div class="card-content wite-text " >
 						<div class="center-align">
 							<p>Carte : {{ sondage.carte.nom }}</p> <!-- Nom de la carte -->
-							<p></p> <!-- Nombre de réponses -->
-							<p>Réponse(s) </p>
+							<p>{{ sondage.propositions|length }} Propositions</p> <!-- Nombre de réponses -->
+
+                            {% set totalReponse = 0 %}
+                            {% for proposition in sondage.propositions %}
+                                {% set totalReponse = totalReponse + proposition.reponses|length %}
+                            {% endfor %}
+
+							<p>{{ totalReponse }} Réponse(s)</p>
 							<br/>
 
 							<!-- Switch -->
