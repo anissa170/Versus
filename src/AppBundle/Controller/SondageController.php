@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Proposition;
 use AppBundle\Entity\Sondage;
 use AppBundle\Entity\Reponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,12 @@ class SondageController extends Controller
     /**
      * @Route("/sondages", name="showSondages")
      */
-    public function sondagesAction(Request $request)
+    public function sondagesAction()
     {
         $sondages = $this
             ->getDoctrine()
             ->getRepository("AppBundle:Sondage")
-            ->findAll();
+            ->findByAuteur($this->getUser());
 
         return $this->render('sondage/sondage-list.html.twig', [
             'sondages' => $sondages
@@ -81,7 +82,7 @@ class SondageController extends Controller
 	/**
      * @Route("/sondage/{id}", name="showSondage")
      */
-    public function sondageAction(Request $request, Sondage $sondage)
+    public function sondageAction(Sondage $sondage)
     {
         $propositions = $sondage->getPropositions();
         $lineResult = array();
@@ -188,7 +189,31 @@ class SondageController extends Controller
     }
 
     /**
-     * @Route("/ajouterSondage", name="addSondage")
+     * @Route("/sondage/{id}/publier", defaults={"id": "0"}, name="publierSondage")
+     * @Method("Post")
+     */
+    public function publierSondage() {
+        $em = $this->getDoctrine()->getManager();
+
+        $sondage = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Sondage')
+            ->find($_POST['id']);
+
+        if (!$sondage->getPublier()) {
+            $sondage->setPublier(true);
+        } else {
+            $sondage->setPublier(false);
+        }
+
+        $em->persist($sondage);
+        $em->flush();
+
+        return new JsonResponse([true]);
+    }
+
+    /**
+     * @Route("/ajouterSondage/{publier}", defaults={"publier": "false"}, name="addSondage")
      */
     public function addSondageAction(Request $request)
     {
@@ -201,6 +226,7 @@ class SondageController extends Controller
             $sondage->setTitre($request->request->get('titre'));
             $sondage->setAuteur($this->getUser());
             $sondage->setCreationDate(new \DateTime());
+
             $sondage->setPublier(false);
 
             $em = $this->getDoctrine()->getManager();
@@ -275,15 +301,9 @@ class SondageController extends Controller
                     $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
                     if(move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $nameFile)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
                     {
-                        echo 'Upload effectué avec succès !';
-                    }
-                    else //Sinon (la fonction renvoie FALSE).
-                    {
-                        echo 'Echec de l\'upload !';
+                        $sondage->setImage($nameFile);
                     }
                 }
-
-                $sondage->setImage($nameFile);
             }
 
             $carte = $this->getDoctrine()->getRepository('AppBundle:Carte')->find($_POST['carte']);
@@ -303,7 +323,7 @@ class SondageController extends Controller
     /**
      * @Route("/editerSondage/{id}", name="editSondage")
      */
-    public function editSondageAction(Request $request, Sondage $sondage)
+    public function editSondageAction(Sondage $sondage)
     {
         if ($sondage->getAuteur() != $this->getUser()) {
             return $this->redirectToRoute("homepage");
@@ -320,7 +340,7 @@ class SondageController extends Controller
     /**
      * @Route("/supprimerSondage/{id}", name="deleteSondage")
      */
-    public function deleteSondageAction(Request $request, Sondage $sondage)
+    public function deleteSondageAction(Sondage $sondage)
     {
         if ($sondage->getAuteur() != $this->getUser() || !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute("homepage");
@@ -334,6 +354,6 @@ class SondageController extends Controller
             return $this->redirectToRoute("sondagesBackend");
         }
 
-        return $this->redirectToRoute("homepage");
+        return $this->redirectToRoute("showSondages");
     }
 }
