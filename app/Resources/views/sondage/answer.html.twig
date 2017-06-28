@@ -21,40 +21,75 @@
     <meta property="twitter:card" content="summary" />
 {% endblock %}
 
-{% block content %}
-    {% include 'default/_share.html.twig' with { title: "Répondre au sondage sur Versus", text: sondage.titre } %}
-	<div id="popup_map" class="popup_block">
-		{% for error in app.session.flashbag.get('error') %}
-			<p class="error">{{ error }}</p>
-		{% endfor %}
-		<div class="map_container">
-			<img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte"usemap="#map">
-			<map name="map" id="map">
-				{% for zone in localisations %}
-					<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
-				{% endfor %}
-			</map>
+{% block body %}
+    {% include 'default/header.html.twig' with { title : 'Création de sondage' } %}
+
+	{% block content %}
+	    {% include 'default/_share.html.twig' with { title: "Répondre au sondage sur Versus", text: sondage.titre } %}
+
+		<form action="{{ path('answer', { 'id': id }) }}" method="post" class="row">
+	        <article class="col s12 m3 s12">
+	        	<div class="card-panel">
+	                <div class="row center-align">
+	                    {% if sondage.image is not empty %}
+							<img id="imgSondage" class="responsive-img" src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
+						{% endif %}
+	                </div>
+
+	                <div class="row">
+						<p class="center-align">Crée par : {{ sondage.auteur.userName }}</p>
+						<p class="center-align">Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
+	                </div>
+	        	</div>
+	        </article>
+	        <article class="col s12 m9">
+
+	            <div class="card-panel">
+
+		            <div class="row">
+		                <div class="input-field col s12">
+		                	<h2 class="row">{{ sondage.titre }}</h2>
+		                	<div style="margin-bottom:50px;" class="col m6 s12">
+			                	{% for reponse in reponses %}
+									<p>
+								      <input name="answer_id" type="radio" id="{{ reponse.id }}" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %}/>
+								      <label style="color:{{ reponse.couleur }};" for="{{ reponse.id }}">{{ reponse.label }}</label>
+								    </p>
+								{% endfor %}
+		                	</div>
+		                	<div class="row col m6 s12">
+		                		<div class="col l12 m12 s6 center-align">
+									<p class="region center-align"></p>
+									<a style="background-color:#f5f5f5;color:black" href="#" class="waves-effect waves-light btn-large newpopup" id="gray-v">Changer de region</a>
+		                		</div>
+
+		                		<div style="margin-top:30px;"class="col l12 m12 s6 center-align">
+									<input class="zone_id" type="hidden" name="zone_id">
+									<button style="background-color:#8f7cbc" class="btn waves-effect waves-light" type="submit" name="action" id="_submit" >Envoyer
+									</button>
+		                		</div>
+		                	</div>
+		                </div>
+		            </div>
+	            </div>
+	        </article>
+	    </form>
+
+		<div id="popup_map" class="popup_block">
+			{% for error in app.session.flashbag.get('error') %}
+				<p class="error">{{ error }}</p>
+			{% endfor %}
+			<div class="map_container">
+				<img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte"usemap="#map">
+				<map name="map" id="map">
+					{% for zone in localisations %}
+						<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}"/>
+					{% endfor %}
+				</map>
+			</div>
 		</div>
-	</div>
-	{% if sondage.image is not empty %}
-		<img src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
-	{% endif %}
-	<p>Crée par : {{ sondage.auteur.userName }}</p>
-	<p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
-	<form action="{{ path('answer', { 'id': id }) }}" method="post">
-		<p class="answer_titile">Choisir votre réponse</p>
-		{% for reponse in reponses %}
-			<p>
-		      <input name="answer_id" type="radio" id="{{ reponse.id }}" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %}/>
-		      <label for="{{ reponse.id }}">{{ reponse.label }}</label>
-		    </p>
-		{% endfor %}
-		<p class="region_title">La zone choisie est :</p>
-		<p class="region"></p>
-		<a href="#" class="newpopup">Changer de region</a>
-		<input class="zone_id" type="hidden" name="zone_id">
-		<input type="submit">
-	</form>
+
+	{% endblock %}
 {% endblock %}
 
 {% block javascripts %}

@@ -61,8 +61,7 @@ class SondageController extends Controller
     		$reponse->setLocalisation($this->getDoctrine()->getRepository("AppBundle:Localisation")->find($request->request->get('zone_id')));
     		$em->persist($reponse);
     		$em->flush();
-    		return $this->render('sondage/answer-validate.html.twig', [
-	        ]);
+            return $this->redirectToRoute('showSondage', array('id' => $id));
     	}
     	else {
 	    	$sondage = $this->getDoctrine()->getRepository("AppBundle:Sondage")->find($id);
