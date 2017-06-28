@@ -151,28 +151,73 @@ class BackendController extends Controller
     public function ajouterCarteAction(Request $request)
     {
         if ($request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getManager();
             $carteName = $request->request->get('name');
-            $carteImage = $request->request->get('pic');
             $cartePoints = json_decode($request->request->get('obj')[0]);
 
             $carte = new Carte();
             $carte->setNom($carteName);
-            $carte->setImage($carteImage);
-            foreach ($cartePoints as $key => $localisationObject) {
-                $localisation = new Localisation();
-                $localisation->setLabel($localisationObject->name);
-                foreach ($localisationObject->points as $key => $pointObject) {
-                    $point = new Point();
-                    $point->setPosX($pointObject->x);
-                    $point->setPosY($pointObject->y);
-                    $localisation->addPoint($point);
+            dump($_FILES);
+
+            if (!empty($_FILES['image']['name'])) {
+                $dossier = 'assets/img/uploaded/';
+                $fichier = basename($_FILES['image']['name']);
+                $taille_maxi = 1000000;
+                $taille = filesize($_FILES['image']['tmp_name']);
+                $extensions = array('.png', '.gif', '.jpg', '.jpeg');
+                $extension = strrchr($_FILES['image']['name'], '.');
+                $nameFile = "imgCarte_" . $carte->getId() . "_" . $fichier;
+                //Début des vérifications de sécurité...
+                if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
+                {
+                    $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
                 }
-                $carte->addLocalisation($localisation);
+                if($taille>$taille_maxi)
+                {
+                    $erreur = 'Le fichier est trop gros...';
+                }
+                if(!isset($erreur)) //S'il n'y a pas d'erreur, on upload
+                {
+                    //On formate le nom du fichier ici...
+                    $fichier = strtr($fichier,
+                        'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
+                        'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                    $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
+                    if(move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $nameFile)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                    {
+                        echo 'Upload effectué avec succès !';
+                    }
+                    else //Sinon (la fonction renvoie FALSE).
+                    {
+                        echo 'Echec de l\'upload !';
+                    }
+                }
+
+                $carte->setImage($nameFile);
             }
 
-            $em = $this->getDoctrine()->getManager();
+            $em->persist($carte);
+            if (!empty($cartePoints)) {
+                foreach ($cartePoints as $key => $localisationObject) {
+                    $localisation = new Localisation();
+                    $localisation->setLabel($localisationObject->name);
+                    $localisation->setCarte($carte);
+                    $em->persist($localisation);
+                    foreach ($localisationObject->points as $key => $pointObject) {
+                        $point = new Point();
+                        $point->setPosX($pointObject->x);
+                        $point->setPosY($pointObject->y);
+                        $point->setLocalisation($localisation);
+                        $em->persist($point);
+                        $localisation->addPoint($point);
+                    }
+                    $em->persist($localisation);
+                    $carte->addLocalisation($localisation);
+                }
+            }
             $em->persist($carte);
             $em->flush();
+
 
             return $this->redirectToRoute('cartesBackend');
         }
