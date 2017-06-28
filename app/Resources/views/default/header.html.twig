@@ -1,50 +1,58 @@
-<!-- <nav class="nav-extended" style="background-color:8f7cbc;">
-	<div class="nav-wrapper">
-		<img data-activates="mobile-demo" class="brand-logo " style="height:400px;margin-top:-140px;margin-left:-250px;"  src="{{ asset('assets/img/logo_blanc.png')}}" />
-	  <a href="#!" class="brand-logo "  style="margin-top:30px;margin-left:155px">Versus</a>
-	  <a href="#!" class="brand-logo center"  style="margin-top:30px">Création de sondage</a>
-	  <ul class="right hide-on-med-and-down">
-	  	     <a href="#" ><img src="{{ asset('assets/img/ic_supervisor_account_black_24dp_2x.png')}}"/></a>
-	  </ul>
-	</div>
-	<div class="nav-content" style="height:50px;">
-
-	</div>
-
-</nav> -->
-
 {% if title is not defined %}
   {% set title ="" %}
 {% endif %} 
 
   <nav class="nav-extended" id="color-purple">
-    <div class="nav-wrapper">
+    <div class="row nav-wrapper">
 
-      <a href="#!" class="brand-logo left">
-         <img alt="Logo" style=" height: 50px;
-    margin: 20px 0px auto 0px;" src="{{ asset("assets/img/logo_blanc.png") }}"/>
-        <div class="left-align " style="margin-top:-70px;margin-left:60px;">Versus</div>
-
+      <a href="#!" class="left col s4 m4 l4 valign-wrapper" style="height:94px;">
+        <img alt="Logo" src="{{ asset("assets/img/logo_blanc.png") }}"/>
       </a>
 
-    </div>
-            <a id="utilisateur-mobile" class="right-align" >
+      <div class="nav-content center col s4 m4 l4">
+        <span class="nav-title ">{{ title }}</span>
+      </div>
+
+      {% if app.user is not empty %}
+
+        {% if app.user.roles[0] == "ROLE_ADMIN" %}
+          <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+            <a href="{{ path('homeBackend') }}">
+                <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                <div class="user" style="line-height:initial;margin-top: -30px;">{{ app.user.username }}</div>
+            </a>
+
+          </div>
+        {% else %}
+          <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+            <a href="{{ path('showSondages') }}">
+                <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                <div class="user" style="line-height:initial;margin-top: -30px;">{{ app.user.username }}</div>
+            </a>
+
+          </div>
+        {% endif %}
+
+      {% else %}
+
+        <a id="utilisateur-mobile" class="right-align col s4 m4 l4" href="{{ path('login') }}">
           <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
         </a>
-    <div class="nav-content center">
-      <span class="nav-title ">{{ title }}</span>
+
+      {% endif %}
 
     </div>
+
   </nav>
 
   <style>
 
-#utilisateur-mobile {
-  position: absolute;
-    right: 10px;
-    top: 10px;
-}
-#color-purple{
-  background-color: #8f7cbc;
-}
+    #utilisateur-mobile img {
+      -webkit-filter: grayscale(1) invert(1);
+      filter: grayscale(1) invert(1);
+    }
+
+    #color-purple{
+      background-color: #8f7cbc;
+    }
   </style>
