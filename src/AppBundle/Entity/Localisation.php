@@ -35,7 +35,7 @@ class Localisation
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Point", mappedBy="localisation")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Point", mappedBy="localisation", cascade={"persist", "remove"})
      */
     private $points;
 

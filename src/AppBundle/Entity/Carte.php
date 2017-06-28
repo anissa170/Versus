@@ -34,7 +34,7 @@ class Carte
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Localisation", mappedBy="carte")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Localisation", mappedBy="carte", cascade={"persist", "remove"})
      */
     private $localisations;
 
