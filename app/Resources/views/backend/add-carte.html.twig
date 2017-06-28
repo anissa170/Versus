@@ -10,27 +10,30 @@
 
 {% block body %}
     {% include 'backend/_nav.html.twig' %}
-    <section>
-        <h1 class="thin">Créer une carte</h1>
+    
+    {% block content %}
+	    <section>
+	        <h1 class="thin">Créer une carte</h1>
 
-        <ul>
-            <li><a href="{{ path('cartesBackend') }}">Retour</a></li>
-        </ul>
-	    <form method="post" action="{{ path("addCarte") }}" enctype="multipart/form-data">
-			<input type="text" name="name" placeholder="Nom">
-			<input type="file" name="image" accept="image/*" id="imgInp">
-			<div style="clear: both;"></div> 
-			<div id="img_container">
-			  <canvas id="map_point"></canvas>
-			  <img id="preview" src="#" alt="your image" />
-			</div>
-			<input id="obj" type="hidden" name="obj[]">
-			<div style="clear: both;"></div> 
-		    <button class="left btn waves-effect waves-light" type="submit" name="action" id="_submit">Créer la carte
-			    <i class="material-icons right">send</i>
-			</button>
-	    </form>
-    </section>
+	        <ul>
+	            <li><a href="{{ path('cartesBackend') }}">Retour</a></li>
+	        </ul>
+		    <form method="post" action="{{ path("addCarte") }}" enctype="multipart/form-data">
+				<input type="text" name="name" placeholder="Nom">
+				<input type="file" name="image" accept="image/*" id="imgInp">
+				<div style="clear: both;"></div> 
+				<div id="img_container">
+				  <canvas id="map_point"></canvas>
+				  <img id="preview" src="#" alt="your image" />
+				</div>
+				<input id="obj" type="hidden" name="obj[]">
+				<div style="clear: both;"></div> 
+			    <button class="left btn waves-effect waves-light" type="submit" name="action" id="_submit">Créer la carte
+				    <i class="material-icons right">send</i>
+				</button>
+		    </form>
+	    </section>
+	{% endblock %}
 {% endblock %}
 
 {% block javascripts %}

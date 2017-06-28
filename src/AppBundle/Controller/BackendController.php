@@ -226,6 +226,22 @@ class BackendController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/supprimerCarte/{id}", name="deleteCarte")
+     */
+    public function deleteCarteAction(Request $request, Carte $carte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($carte);
+        $em->flush();
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute("sondagesBackend");
+        }
+
+        return $this->redirectToRoute("homepage");
+    }
 
     /**
      * @Route("/sondage/{id}", name="propositionsFromSondageBackend")
