@@ -344,6 +344,11 @@ class SondageController extends Controller
         if ($sondage->getAuteur() != $this->getUser() || !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute("homepage");
         }
+
+        if (file_exists("assets/img/uploaded/".$sondage->getImage())) {
+            unlink("assets/img/uploaded/".$sondage->getImage());
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $em->remove($sondage);
