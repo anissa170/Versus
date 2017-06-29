@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% block body %}
+    {% include 'default/header.html.twig' with { title : 'Mon compte' } %}
 {% block content %}
 	<!--CREATION DE SONDAGE-->
 	<div class="row"  id="gray-color" style="height:100%;">
@@ -80,6 +82,7 @@
 
 		</div>
 	</div>
+{% endblock %}
 {% endblock %}
 
 {% block stylesheets %}
