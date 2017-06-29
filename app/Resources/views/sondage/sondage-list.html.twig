@@ -7,179 +7,89 @@
 
 {% block body %}
     {% include 'default/header.html.twig' with { title : 'Mon compte' }%}
-{% block content %}
-	<!--CREATION DE SONDAGE-->
-	<div class="row"  id="gray-color">
+	{% block content %}
+		<!--CREATION DE SONDAGE-->
+		<div class="row"  id="gray-color">
 
-		<div class="container">
+			<div class="container">
 
-			<article class="col s6 m6 l4" >
-				<div class="card small white " style="border:dotted;">
-					<div class="card-content wite-text gray" >
-						<a class="center btn-floating btn-large waves-effect waves-light deep-purple lighten-2" href="{{ path('addSondage') }}" style="margin-top:30%;margin-left:40%;" >
-							<i class="material-icons">add</i>
-						</a>
+				<article class="col s6 m6 l4" >
+					<div class="card small white " style="border:dotted;">
+						<div class="card-content wite-text gray" >
+							<a class="center btn-floating btn-large waves-effect waves-light deep-purple lighten-2" href="{{ path('addSondage') }}" style="margin-top:30%;margin-left:40%;" >
+								<i class="material-icons">add</i>
+							</a>
+						</div>
 					</div>
-				</div>
-			</article>
+				</article>
 
-			<!----------AFFICHAGE SONDAGE---------->
+				<!----------AFFICHAGE SONDAGE---------->
 
-			<!--Block 1-->
+				<!--Block 1-->
 
-            {% for sondage in sondages %}
-			<article class="col s6 m6 l4">
-				<div class="card small white">
-					<div class="card-content wite-text">
-						<span class="card-title">{{ sondage.titre }}</span>
-					</div>
+	            {% for sondage in sondages %}
+				<article class="col s6 m6 l4">
+					<div class="card small white">
+						<div class="card-content wite-text">
+							<span class="card-title">{{ sondage.titre }}</span>
+						</div>
 
-					<div class="card-content wite-text " >
-						<div class="center-align">
-							<p>Carte : {{ sondage.carte.nom }}</p> <!-- Nom de la carte -->
-							<p>{{ sondage.propositions|length }} Propositions</p> <!-- Nombre de réponses -->
+						<div class="card-content wite-text " >
+							<div class="center-align">
+								<p>Carte : {{ sondage.carte.nom }}</p> <!-- Nom de la carte -->
+								<p>{{ sondage.propositions|length }} Propositions</p> <!-- Nombre de réponses -->
 
-                            {% set totalReponse = 0 %}
-                            {% for proposition in sondage.propositions %}
-                                {% set totalReponse = totalReponse + proposition.reponses|length %}
-                            {% endfor %}
+	                            {% set totalReponse = 0 %}
+	                            {% for proposition in sondage.propositions %}
+	                                {% set totalReponse = totalReponse + proposition.reponses|length %}
+	                            {% endfor %}
 
-							<p>{{ totalReponse }} Réponse(s)</p>
-							<br/>
+								<p>{{ totalReponse }} Réponse(s)</p>
+								<br/>
 
-							<!-- Switch -->
+								<!-- Switch -->
 
-							<div class="switch" >
-								<label>
-									Off
-									{% if sondage.publier %}
-									    <input onclick="switchPublication({{ sondage.id }})" checked type="checkbox">
-                                    {% else %}
-                                        <input onclick="switchPublication({{ sondage.id }})" type="checkbox">
-                                    {% endif %}
-									<span class="lever"></span>
-									Publié
-								</label>
+								<div class="switch" >
+									<label>
+										Off
+										{% if sondage.publier %}
+										    <input onclick="switchPublication({{ sondage.id }})" checked type="checkbox">
+	                                    {% else %}
+	                                        <input onclick="switchPublication({{ sondage.id }})" type="checkbox">
+	                                    {% endif %}
+										<span class="lever"></span>
+										Publié
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-action deep-purple lighten-2"  >
+							<div class="center-align" >
+								<a href="#"> <i class="material-icons" style="color:black;" >mode_edit</i></a>
+								<a href="{{ path('showSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">remove_red_eye</i></a>
+								<a href="{{ path('deleteSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">delete_forever</i></a>
+								<a class="dropdown-button" href="#" data-activates='dropdown{{ sondage.id }}'>
+	                                <i class="material-icons" style="color:black;">share</i>
+	                            </a>
+
+	                            <!-- Dropdown Structure -->
+	                            <ul id='dropdown{{ sondage.id }}' class='dropdown-content'>
+	                                <li><a href="https://www.facebook.com/sharer.php?u={{ path('answer', {id: sondage.id}) }}&amp;t=Partager depuis versus" title="Partager sur facebook" target="_blank">Facebook</a></li>
+	                                <li><a href="https://twitter.com/share?url={{ path('answer', {id: sondage.id}) }}&amp;text=Partager depuis versus &amp;hashtags=Versus" title="Partager sur twitter" target="_blank">Twitter</a></li>
+	                                <li><a href="https://plus.google.com/share?url={{ path('answer', {id: sondage.id}) }}" title="Partager sur google plus" target="_blank">Google +</a></li>
+	                            </ul>
 							</div>
 						</div>
 					</div>
+				</article>
+	            {% endfor %}
 
-					<div class="card-action deep-purple lighten-2"  >
-						<div class="center-align" >
-							<a href="#"> <i class="material-icons" style="color:black;" >mode_edit</i></a>
-							<a href="{{ path('showSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">remove_red_eye</i></a>
-							<a href="{{ path('deleteSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">delete_forever</i></a>
-							<a class="dropdown-button" href="#" data-activates='dropdown{{ sondage.id }}'>
-                                <i class="material-icons" style="color:black;">share</i>
-                            </a>
-
-                            <!-- Dropdown Structure -->
-                            <ul id='dropdown{{ sondage.id }}' class='dropdown-content'>
-                                <li><a href="https://www.facebook.com/sharer.php?u={{ path('answer', {id: sondage.id}) }}&amp;t=Partager depuis versus" title="Partager sur facebook" target="_blank">Facebook</a></li>
-                                <li><a href="https://twitter.com/share?url={{ path('answer', {id: sondage.id}) }}&amp;text=Partager depuis versus &amp;hashtags=Versus" title="Partager sur twitter" target="_blank">Twitter</a></li>
-                                <li><a href="https://plus.google.com/share?url={{ path('answer', {id: sondage.id}) }}" title="Partager sur google plus" target="_blank">Google +</a></li>
-                            </ul>
-						</div>
-					</div>
-				</div>
-			</article>
-            {% endfor %}
-
+			</div>
 		</div>
-	</div>
+	{% endblock %}
+
 {% endblock %}
-<<<<<<< HEAD
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-	<style>
-		#color-purple{
-			background-color: #8f7cbc;
-		}
-
-		#logo-versus{
-			height:400px;
-			margin-top:-140px;
-			margin-left:-250px;
-		}
-		#text-logo{
-			margin-top:30px;
-			margin-left:155px;
-		}
-
-		#text-titre{
-			margin-top:30px;
-		}
-
-		#gray-color{
-			background-color:#f5f5f5;
-		}
-
-		#bloc-gauche{
-			margin-left:50px;
-			margin-top:60px;
-			position:relative;
-		}
-		#bloc-image{
-			border:solid;
-			width:220px;
-			height:220px;
-		}
-
-		#button-upload{
-			background-color:#9e9e9e;
-			font-size:14px;
-			position:absolute;
-		}
-		#file-url{
-			width:350px;
-			position:absolute;
-
-		}
-
-		#card-menu{
-			background-color:white;
-			color:black;
-			margin-top:70px;
-			width:250px;
-			font-size:14px;
-		}
-
-		#form-bloc{
-			margin-top:40px;
-			position:relative;
-		}
-
-		#margin-rightSide{
-			margin-right:30px;
-		}
-
-		#username_css{
-			margin-right:30px;
-		}
-
-		#logo-user{
-			margin-right:30px;
-		}
-
-		body {
-
-			flex-direction: column;
-
-
-		}
-
-		.row{
-			margin-bottom: 0px;
-			margin-top: -20px;
-
-		}
-	</style>
-=======
->>>>>>> master
-{% endblock %}
-
 
 {% block javascripts %}
     {{ parent() }}
