@@ -364,7 +364,7 @@ class SondageController extends Controller
             }
         }
 
-        if (file_exists("assets/img/uploaded/".$sondage->getImage())) {
+        if ($sondage->getImage()) {
             unlink("assets/img/uploaded/".$sondage->getImage());
         }
 
