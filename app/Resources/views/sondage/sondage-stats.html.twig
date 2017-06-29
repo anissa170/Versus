@@ -42,7 +42,7 @@
 	
           	<div class="card white">
 	            <div class="card-content black-text " class="col s6" >
-	              <a class="waves-effect waves-light btn right">Répondre</a>
+	              <a class="waves-effect waves-light btn right" href="{{ path('answer', {id: sondage.id}) }}">Répondre</a>
 	              <span class="card-title " >{{ sondage.titre }}</span>
 	              <p>Crée par : {{ sondage.auteur.userName }}</p>
 	              <p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
