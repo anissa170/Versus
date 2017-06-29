@@ -8,8 +8,6 @@
 
  }
 
-
-
 #diagramme{
 	position:relative;
 	min-height:55%;
@@ -57,4 +55,8 @@
 .btn, .btn-large {
 
     background-color: #8f7cbc !important;
+}
+
+body{
+	 background-color: #f5f5f5;
 }
