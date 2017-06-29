@@ -1,10 +1,15 @@
 {% extends 'layout.html.twig' %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/sondage-list.css") }}">
+
+{% endblock %}
 
 {% block body %}
-    {% include 'default/header.html.twig' with { title : 'Mon compte' } %}
+    {% include 'default/header.html.twig' with { title : 'Mon compte' }%}
 {% block content %}
 	<!--CREATION DE SONDAGE-->
-	<div class="row"  id="gray-color" style="height:100%;">
+	<div class="row"  id="gray-color">
 
 		<div class="container">
 
@@ -83,6 +88,7 @@
 		</div>
 	</div>
 {% endblock %}
+<<<<<<< HEAD
 {% endblock %}
 
 {% block stylesheets %}
@@ -170,7 +176,10 @@
 
 		}
 	</style>
+=======
+>>>>>>> master
 {% endblock %}
+
 
 {% block javascripts %}
     {{ parent() }}
