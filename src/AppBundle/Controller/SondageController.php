@@ -21,6 +21,10 @@ class SondageController extends Controller
      */
     public function sondagesAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('login');
+        }
+
         $sondages = $this
             ->getDoctrine()
             ->getRepository("AppBundle:Sondage")
@@ -192,12 +196,17 @@ class SondageController extends Controller
      * @Method("Post")
      */
     public function publierSondage() {
-        $em = $this->getDoctrine()->getManager();
 
         $sondage = $this
             ->getDoctrine()
             ->getRepository('AppBundle:Sondage')
             ->find($_POST['id']);
+
+        if ($sondage->getAuteur() != $this->getUser()) {
+            return $this->redirectToRoute("homepage");
+        }
+
+        $em = $this->getDoctrine()->getManager();
 
         if (!$sondage->getPublier()) {
             $sondage->setPublier(true);
