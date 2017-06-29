@@ -1,85 +1,77 @@
+#color-purple{
+	background-color: #8f7cbc;
+}
 
-		#color-purple{
-			background-color: #8f7cbc;
-		}
+#logo-versus{
+	height:400px;
+	margin-top:-140px;
+	margin-left:-250px;
+}
+#text-logo{
+	margin-top:30px;
+	margin-left:155px;
+}
 
-		#logo-versus{
-			height:400px;
-			margin-top:-140px;
-			margin-left:-250px;
-		}
-		#text-logo{
-			margin-top:30px;
-			margin-left:155px;
-		}
+#text-titre{
+	margin-top:30px;
+}
 
-		#text-titre{
-			margin-top:30px;
-		}
+#gray-color{
+	background-color:#f5f5f5;
+}
 
-		#gray-color{
-			background-color:#f5f5f5;
-		}
+#bloc-gauche{
+	margin-left:50px;
+	margin-top:60px;
+	position:relative;
+}
+#bloc-image{
+	border:solid;
+	width:220px;
+	height:220px;
+}
 
-		#bloc-gauche{
-			margin-left:50px;
-			margin-top:60px;
-			position:relative;
-		}
-		#bloc-image{
-			border:solid;
-			width:220px;
-			height:220px;
-		}
+#button-upload{
+	background-color:#9e9e9e;
+	font-size:14px;
+	position:absolute;
+}
+#file-url{
+	width:350px;
+	position:absolute;
 
-		#button-upload{
-			background-color:#9e9e9e;
-			font-size:14px;
-			position:absolute;
-		}
-		#file-url{
-			width:350px;
-			position:absolute;
+}
 
-		}
+#card-menu{
+	background-color:white;
+	color:black;
+	margin-top:70px;
+	width:250px;
+	font-size:14px;
+}
 
-		#card-menu{
-			background-color:white;
-			color:black;
-			margin-top:70px;
-			width:250px;
-			font-size:14px;
-		}
+#form-bloc{
+	margin-top:40px;
+	position:relative;
+}
 
-		#form-bloc{
-			margin-top:40px;
-			position:relative;
-		}
+#margin-rightSide{
+	margin-right:30px;
+}
 
-		#margin-rightSide{
-			margin-right:30px;
-		}
+#username_css{
+	margin-right:30px;
+}
 
-		#username_css{
-			margin-right:30px;
-		}
+#logo-user{
+	margin-right:30px;
+}
 
-		#logo-user{
-			margin-right:30px;
-		}
+body {
+	flex-direction: column;
+	background-color: #f5f5f5;
+}
 
-		body {
-
-			flex-direction: column;
-			background-color: #f5f5f5;
-
-
-		}
-
-		.row{
-			margin-bottom: 0px;
-			
-
-		}
-	</style>
-{% endblock %}
+.row{
+	margin-bottom: 0;
+}
