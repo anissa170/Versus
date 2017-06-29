@@ -62,7 +62,16 @@
 							<a href="#"> <i class="material-icons" style="color:black;" >mode_edit</i></a>
 							<a href="{{ path('showSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">remove_red_eye</i></a>
 							<a href="{{ path('deleteSondage', {id: sondage.id}) }}"><i class="material-icons" style="color:black;">delete_forever</i></a>
-							<a href="#"><i class="material-icons" style="color:black;">share</i></a>
+							<a class="dropdown-button" href="#" data-activates='dropdown{{ sondage.id }}'>
+                                <i class="material-icons" style="color:black;">share</i>
+                            </a>
+
+                            <!-- Dropdown Structure -->
+                            <ul id='dropdown{{ sondage.id }}' class='dropdown-content'>
+                                <li><a href="https://www.facebook.com/sharer.php?u={{ path('') }}&amp;t={{ text }}">Facebook</a></li>
+                                <li><a href="#!">Twitter</a></li>
+                                <li><a href="#!">Google +</a></li>
+                            </ul>
 						</div>
 					</div>
 				</div>
@@ -164,19 +173,20 @@
     {{ parent() }}
 	<script type="text/javascript"></script>
 	<script type="text/javascript">
-        $(".dropdown-button").dropdown();
 
-        (function($) {
-            $(function() {
-                $('.dropdown-button').dropdown({
+        $(document).ready(function(){
+            $('.dropdown-button').dropdown({
                     inDuration: 300,
                     outDuration: 225,
-                    hover: true, // Activate on hover
-                    belowOrigin: true, // Displays dropdown below the button
-                    alignment: 'right' // Displays dropdown with edge aligned to the left of button
-                });
-            }); // End Document Ready
-        })(jQuery); // End of jQuery name space
+                    constrainWidth: false, // Does not change width of dropdown to that of the activator
+                    hover: false, // Activate on hover
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: false, // Displays dropdown below the button
+                    alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                    stopPropagation: false // Stops event propagation
+                }
+            );
+        });
 
         function switchPublication(id) {
             $.post("{{ path('publierSondage') }}",

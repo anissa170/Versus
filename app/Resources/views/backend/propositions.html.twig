@@ -26,7 +26,7 @@
                     <td>{{ proposition.label }}</td>
                     <td>{{ proposition.reponses|length }}</td>
                     <td>
-                        <a class="btn-floating btn-large waves-effect waves-light red" href="">
+                        <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('deleteProposition', {id: proposition.id}) }}">
                             <i class="material-icons">clear</i>
                         </a>
                     </td>
