@@ -358,8 +358,10 @@ class SondageController extends Controller
      */
     public function deleteSondageAction(Sondage $sondage)
     {
-        if ($sondage->getAuteur() != $this->getUser() || !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute("homepage");
+        if ($sondage->getAuteur() != $this->getUser()) {
+            if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute("homepage");
+            }
         }
 
         if (file_exists("assets/img/uploaded/".$sondage->getImage())) {
