@@ -157,7 +157,6 @@ class BackendController extends Controller
 
             $carte = new Carte();
             $carte->setNom($carteName);
-            dump($_FILES);
 
             if (!empty($_FILES['image']['name'])) {
                 $dossier = 'assets/img/uploaded/';
