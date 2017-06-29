@@ -6,23 +6,31 @@
 
 
 {% endblock %}
+
+{% block meta_share %}
+
+	{% set image = asset("assets/img/uploaded/" ~ sondage.image) %}
+	{% if image is not defined or image == null %}
+		{% set image = asset("assets/img/logo_violet.png") %}
+	{% endif %}
+
+    <meta property="og:url" content="{{ app.request.uri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Répondre au sondage sur Versus" />
+    <meta property="og:description" content="{{ sondage.titre }}" />
+    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ image }}" />
+    <meta property="twitter:card" content="summary" />
+
+
+{% endblock %}
+
 {% block body %}
     {% include 'default/header.html.twig' with { title : 'Statistiques' }%}
 
 {% block content %}
+	 {% include 'default/_share.html.twig' with { title: "Répondre au sondage sur Versus", text: sondage.titre } %}
 
-  <!--       <article class="col s12 m3">
-            <div class="card-panel small left" >
-                <div class="row" style="height:300px;Width:300px;" >
-                	{% if sondage.image is not empty %}
-						<img id="imgSondage" class="responsive-img" src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
-					{% endif %}
-                   
-                
-                </div>
 
-            </div>
-        </article> -->
  		<div class="row">
 		<article class="col s3 m3" >
       		 <div class="card-panel  left" >
@@ -96,9 +104,9 @@
 				</div>   -->
 
 				 <div class="row" id="swipe-region" >
-						<div class="col s6 "  style="position:relative;" >
+						<div class="col s6 "  >
 
-								<img id="image_map" class="responsive-img"  style="position:relative;"  src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" usemap="#map">
+								<img id="image_map" class="responsive-img"    src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" usemap="#map">
 						<map name="map" id="map">
 							{% for zone in localisations %}
 								<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" data-url="{{ path('ajaxSondage', {'id': sondage.id }) }}" {% if loop.first %}class="selected"{% endif %}/>
@@ -137,6 +145,7 @@
 	<script src="{{ asset("assets/js/libs/imageMapResizer.min.js") }}"></script>
 	<script src="http://davidlynch.org/projects/maphilight/jquery.maphilight.js"></script>
 	<script src="{{ asset("assets/js/statsSondage.js") }}"></script>
+	<script src="{{ asset("assets/js/share.js") }}"></script>
 	<script type="text/javascript"> 
 		$(document).ready(function(){
 			$('ul.tabs').tabs();
