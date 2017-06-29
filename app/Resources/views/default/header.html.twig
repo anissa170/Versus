@@ -16,18 +16,18 @@
       {% if app.user is not empty %}
 
         {% if app.user.roles[0] == "ROLE_ADMIN" %}
-          <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+          <div  style="padding-right:0;" id="utilisateur-mobile" class="right-align col s1 m1 l1 offset-s3 offset-m3 offset-l3" >
             <a href="{{ path('homeBackend') }}">
-                <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
-                <div class="user" style="line-height:initial;margin-top: -30px;">{{ app.user.username }}</div>
+                <img style="margin-right:10px;" alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                <div class="user" style="line-height:initial;margin-top: -30px;">Bienvenue<center style="margin:0;">{{ app.user.username }}</center></div>
             </a>
 
           </div>
         {% else %}
-          <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+          <div style="padding-right:0;" id="utilisateur-mobile" class="right-align col s1 m1 l1 offset-s3 offset-m3 offset-l3" >
             <a href="{{ path('showSondages') }}">
-                <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
-                <div class="user" style="line-height:initial;margin-top: -30px;">{{ app.user.username }}</div>
+                <img style="margin-right:10px;" alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                <div class="user" style="line-height:initial;margin-top: -30px;">Bienvenue<center style="margin:0;">{{ app.user.username }}</center></div>
             </a>
 
           </div>
@@ -39,6 +39,10 @@
           <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
         </a>
 
+      {% endif %}
+
+      {% if app.user is not empty %}
+        <a style="position: absolute;right: 0;top:75px;text-decoration: none;color: #8f7cbc;" href="{{ path('fos_user_security_logout') }}">Déconnecter</a>
       {% endif %}
 
     </div>
