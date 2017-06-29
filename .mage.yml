@@ -11,7 +11,7 @@ magephp:
                 - ./var/log/*
                 - ./web/app_dev.php
             hosts:
-                - 90.61.28.217
+                - 82.121.117.79
             pre-deploy:
                 - git/update
                 - composer/install
