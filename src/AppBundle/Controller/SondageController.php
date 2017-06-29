@@ -87,8 +87,10 @@ class SondageController extends Controller
      */
     public function sondageAction(Sondage $sondage)
     {
-        if (!$sondage->getPublier()) {
-            return $this->redirectToRoute('homepage');
+        if ($sondage->getAuteur() !== $this->getUser()) {
+            if (!$sondage->getPublier()) {
+                return $this->redirectToRoute('homepage');
+            }
         }
 
         $propositions = $sondage->getPropositions();
