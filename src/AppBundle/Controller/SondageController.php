@@ -319,6 +319,8 @@ class SondageController extends Controller
 
             $em->persist($sondage);
             $em->flush();
+
+            return $this->redirectToRoute('showSondages');
         }
 
         $cartes = $this->getDoctrine()->getRepository("AppBundle:Carte")->findAll();
