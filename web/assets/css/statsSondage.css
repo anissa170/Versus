@@ -1,12 +1,10 @@
 .map_container div {
  	background-repeat: no-repeat;
- 	}
+}
 
- #image_map {
+#image_map {
 
- 
-
- }
+}
 
 #diagramme{
 	position:relative;
@@ -14,29 +12,20 @@
 	min-width:50%;
 }
 
-@media screen and (min-width: 400px)
-{
-    /* Rédigez vos propriétés CSS ici */
-
-#diagramme{
-	
-	min-height:40%;
-	min-width:40%;
-
-}
+@media screen and (min-width: 400px) {
+	#diagramme{
+		min-height:40%;
+		min-width:40%;
+	}
 }
 
-
-
-[type="checkbox"].filled-in:checked+label:after  {
-
+[type="checkbox"].filled-in:checked+label:after {
     border: 2px solid #8f7cbc;
     background-color: #8f7cbc;
- }
+}
 
- label {
-   
-    color: black;
+label {
+	color: black;
 }
 
 #map{
@@ -53,10 +42,9 @@
     background-color: #8f7cbc !important;
 }
 .btn, .btn-large {
-
     background-color: #8f7cbc !important;
 }
 
-body{
-	 background-color: #f5f5f5;
+body {
+	background-color: #f5f5f5;
 }
