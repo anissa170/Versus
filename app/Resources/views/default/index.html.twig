@@ -14,9 +14,33 @@
           <img alt="Logo" class="site-logo" src="{{asset('assets/img/logo_violet.png')}}"/>
           <div class="site-text">Versus</div>
         </a>
-        <a id="nav-mobile" class="right-align" href="{{ path('login') }}">
-          <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="{{asset ('assets/img/ic_supervisor_account_black_24dp_2x.png')}}"/> 
-        </a>
+        {% if app.user is not empty %}
+
+          {% if app.user.roles[0] == "ROLE_ADMIN" %}
+            <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+              <a href="{{ path('homeBackend') }}">
+                  <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">{{ app.user.username }}</div>
+              </a>
+
+            </div>
+          {% else %}
+            <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
+              <a href="{{ path('showSondages') }}">
+                  <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">{{ app.user.username }}</div>
+              </a>
+
+            </div>
+          {% endif %}
+
+        {% else %}
+
+          <a id="utilisateur-mobile" class="right-align col s4 m4 l4" href="{{ path('login') }}">
+            <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
+          </a>
+
+        {% endif %}
       </div>
 
     </nav>
