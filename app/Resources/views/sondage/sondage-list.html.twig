@@ -68,9 +68,9 @@
 
                             <!-- Dropdown Structure -->
                             <ul id='dropdown{{ sondage.id }}' class='dropdown-content'>
-                                <li><a href="https://www.facebook.com/sharer.php?u={{ path('') }}&amp;t={{ text }}">Facebook</a></li>
-                                <li><a href="#!">Twitter</a></li>
-                                <li><a href="#!">Google +</a></li>
+                                <li><a href="https://www.facebook.com/sharer.php?u={{ path('answer', {id: sondage.id}) }}&amp;t=Partager depuis versus" title="Partager sur facebook" target="_blank">Facebook</a></li>
+                                <li><a href="https://twitter.com/share?url={{ path('answer', {id: sondage.id}) }}&amp;text=Partager depuis versus &amp;hashtags=Versus" title="Partager sur twitter" target="_blank">Twitter</a></li>
+                                <li><a href="https://plus.google.com/share?url={{ path('answer', {id: sondage.id}) }}" title="Partager sur google plus" target="_blank">Google +</a></li>
                             </ul>
 						</div>
 					</div>
