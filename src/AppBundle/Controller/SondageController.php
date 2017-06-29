@@ -369,4 +369,21 @@ class SondageController extends Controller
 
         return $this->redirectToRoute("showSondages");
     }
+
+    /**
+     * @Route("/supprimerProposition/{id}", name="deleteProposition")
+     */
+    public function deletePropositionAction(Proposition $proposition)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($proposition);
+        $em->flush();
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute("sondagesBackend");
+        }
+
+        return $this->redirectToRoute("showSondages");
+    }
 }
