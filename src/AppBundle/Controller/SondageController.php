@@ -87,6 +87,10 @@ class SondageController extends Controller
      */
     public function sondageAction(Sondage $sondage)
     {
+        if (!$sondage->getPublier()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $propositions = $sondage->getPropositions();
         $lineResult = array();
         $reponseRegion = array();
