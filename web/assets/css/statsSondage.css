@@ -1,8 +1,60 @@
 .map_container div {
  	background-repeat: no-repeat;
- }
+ 	}
 
  #image_map {
- 	height: 500px;
- 	width: 500px;
+
+ 
+
  }
+
+
+
+#diagramme{
+	position:relative;
+	min-height:55%;
+	min-width:50%;
+}
+
+@media screen and (min-width: 400px)
+{
+    /* Rédigez vos propriétés CSS ici */
+
+#diagramme{
+	
+	min-height:40%;
+	min-width:40%;
+
+}
+}
+
+
+
+[type="checkbox"].filled-in:checked+label:after  {
+
+    border: 2px solid #8f7cbc;
+    background-color: #8f7cbc;
+ }
+
+ label {
+   
+    color: black;
+}
+
+#map{
+	height:200px;
+	width:200px;
+}
+
+#chartRegion{
+	width:100px;
+	height: 100px;
+}
+
+.btn:hover, .btn-large:hover {
+    background-color: #8f7cbc !important;
+}
+.btn, .btn-large {
+
+    background-color: #8f7cbc !important;
+}

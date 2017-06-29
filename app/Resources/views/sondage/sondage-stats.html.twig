@@ -4,38 +4,130 @@
 	{{ parent() }}
 	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/statsSondage.css") }}">
 
+
 {% endblock %}
+{% block body %}
+    {% include 'default/header.html.twig' with { title : 'Statistiques' }%}
 
 {% block content %}
-<p>{{ sondage.titre }}</p>
-{% if sondage.image is not empty %}
-	<img src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
-{% endif %}
-<p>Crée par : {{ sondage.auteur.userName }}</p>
-<p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
-<p>Pays : {{ sondage.carte.nom }}</p>
-{% for reponse in sondage.propositions %}
-	<input type="radio" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >{{ reponse.label }}
-{% endfor %}
-<ul id="tabs-swipe" class="tabs">
-	<li class="tab col s3"><a class="active" href="#swipe-region">Par region</a></li>
-	<li class="tab col s3"><a href="#swipe-jours">Par jours</a></li>
-</ul>
-<div id="swipe-region" class="col s12">
-	<div class="map_container">
-		<img id="image_map" src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte"usemap="#map">
-		<map name="map" id="map">
-			{% for zone in localisations %}
-				<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" data-url="{{ path('ajaxSondage', {'id': sondage.id }) }}" {% if loop.first %}class="selected"{% endif %}/>
-			{% endfor %}
-		</map>
-	</div>
-	<p class="regionLabel">Region choisie : <span>{{ first_localisation_name }}</span></p>
-	<canvas id="chartRegion"></canvas>
-</div>
-<div id="swipe-jours" class="col s12">
-	<canvas id="chartJours"></canvas>
-</div>
+
+  <!--       <article class="col s12 m3">
+            <div class="card-panel small left" >
+                <div class="row" style="height:300px;Width:300px;" >
+                	{% if sondage.image is not empty %}
+						<img id="imgSondage" class="responsive-img" src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
+					{% endif %}
+                   
+                
+                </div>
+
+            </div>
+        </article> -->
+ 		<div class="row">
+		<article class="col s3 m3" >
+      		 <div class="card-panel  left" >
+                <div class="row"  >
+                	{% if sondage.image is not empty %}
+						<img id="imgSondage" class="responsive-img" src="{{ asset("assets/img/uploaded/" ~ sondage.image) }}">
+					{% endif %}                
+                </div>
+            </div>
+      	</article>
+
+
+
+										<!--CARTE DROITE-->
+
+      	<article class="col  m9" style="">
+	
+          	<div class="card white">
+	            <div class="card-content black-text " class="col s6" >
+	              <a class="waves-effect waves-light btn right">Répondre</a>
+	              <span class="card-title " >{{ sondage.titre }}</span>
+	              <p>Crée par : {{ sondage.auteur.userName }}</p>
+	              <p>Crée le : {{ sondage.creationDate|date("d/m/Y") }}</p>
+				  <p>Pays : {{ sondage.carte.nom }}</p>
+				  <p class="regionLabel">Region choisie : <span>{{ first_localisation_name }}</span></p>
+				  <p class="col s6" class="right-align">Nom de la carte : {{ sondage.carte.nom }}</p>
+
+	            </div>
+            <div class="card-action" class="col m9">
+            	{% for reponse in sondage.propositions %}
+				<input type="checkbox" class="filled-in" checked="checked" name="answer_id" value="{{ reponse.id }}" {% if loop.first %}checked{% endif %} >
+				<label for="filled-in-box">{{ reponse.label }}</label>
+				{% endfor %}
+
+					
+
+            </article>
+          </div>
+		       
+		  
+		  <div class="card" style="margin-left:10px;margin-right:10px;" >
+		 
+		    <div class="card-tabs">
+		      <ul class="tabs tabs-fixed-width">
+		        <li class="tab col s6"><a class="active" href="#swipe-region">Par region</a></li>
+		        <li class="tab col s6"><a href="#swipe-jours">Par jours</a></li>
+		      </ul>
+
+		    </div>
+		    <div class="card-content grey lighten-4">
+
+		   <!-- 	<div class="row"  id="swipe-region" >
+
+					<div class="map_container"  class="col s6" style="border:solid;position:absolue;min-height:50%;min-width:50%;">
+						<img id="image_map" class="responsive-img"   src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" usemap="#map">
+						<map name="map" id="map">
+							{% for zone in localisations %}
+								<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" data-url="{{ path('ajaxSondage', {'id': sondage.id }) }}" {% if loop.first %}class="selected"{% endif %}/>
+							{% endfor %}
+						</map>
+					
+					</div>
+
+
+					<div class="col s6"  style="border:solid blue;position:absolue;min-height:50%;min-width:50%;">
+						<canvas  id="chartRegion"></canvas>
+					</div>
+
+					
+					
+				</div>   -->
+
+				 <div class="row" id="swipe-region" >
+						<div class="col s6 "  style="position:relative;" >
+
+								<img id="image_map" class="responsive-img"  style="position:relative;"  src="{{ asset("assets/img/uploaded/" ~ carte.image) }}" alt="Carte" usemap="#map">
+						<map name="map" id="map">
+							{% for zone in localisations %}
+								<area shape="poly" coords="{% for point in zone.points %}{{ point.posX }},{{ point.posY }}{% if not loop.last %},{% endif %}{% endfor %}" title="{{ zone.label }}" data-id="{{ zone.id }}" data-url="{{ path('ajaxSondage', {'id': sondage.id }) }}" {% if loop.first %}class="selected"{% endif %}/>
+							{% endfor %}
+						</map>
+						
+						</div>
+
+     					 <div class="col s6" id="diagramme">
+     					 	<canvas  id="chartRegion"></canvas>
+     					 </div>
+				</div> 
+
+ 
+
+				<div class="col s6"  id="swipe-jours" >
+					<canvas id="chartJours" ></canvas>
+				</div>
+
+
+		    </div>
+		  </div>
+
+
+
+        
+
+
+
 {% endblock %}
 
 
@@ -115,4 +207,5 @@
 
 	</script>
 
+{% endblock %}
 {% endblock %}
