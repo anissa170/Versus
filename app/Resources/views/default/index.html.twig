@@ -20,7 +20,9 @@
             <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
               <a href="{{ path('homeBackend') }}">
                   <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
-                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">{{ app.user.username }}</div>
+                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">Bienvenue<center style="margin:0;">{{ app.user.username }}</center>
+
+                  </div>
               </a>
 
             </div>
@@ -28,7 +30,7 @@
             <div id="utilisateur-mobile" class="right-align col s4 m4 l4" >
               <a href="{{ path('showSondages') }}">
                   <img alt="icone utilisateur" id="nav-mobile" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
-                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">{{ app.user.username }}</div>
+                  <div class="user" style="line-height:initial;margin-top: 45px; color:black;">Bienvenue<center style="margin:0;">{{ app.user.username }}</center></div>
               </a>
 
             </div>
@@ -40,6 +42,11 @@
             <img alt="icone utilisateur" id="nav-mobile" class="right-align" src="{{ asset("assets/img/ic_supervisor_account_black_24dp_2x.png")}}"/> 
           </a>
 
+        {% endif %}
+
+      
+        {% if app.user is not empty %}
+          <a style="position: absolute;right: 0;top:60px;text-decoration: none;color: black;" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
         {% endif %}
       </div>
 
